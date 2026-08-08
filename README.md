@@ -4,61 +4,87 @@
 </p>
 
 <p align="center">
-  <img alt="Status" src="https://img.shields.io/badge/status-under%20development-orange">
+  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue">
   <img alt="PHP" src="https://img.shields.io/badge/PHP-8.3%2B-777BB4?logo=php&logoColor=white">
+  <img alt="Laravel" src="https://img.shields.io/badge/Laravel-11%2B-FF2D20?logo=laravel&logoColor=white">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-blue">
 </p>
 
 ---
 
-CodeAtlas performs **static analysis** on a codebase and produces a **visual, interactive architecture map**. Open a project and instead of reading hundreds of files, see the whole picture: routes, controllers, services, repositories, models, events, jobs, policies, and how everything connects.
+CodeAtlas performs **static analysis** on a codebase and produces a **visual, interactive architecture map**. Open a project and instead of reading hundreds of files, see the whole picture: routes, controllers, services, repositories, models, events, jobs, policies — and how everything connects.
 
 > **Laravel is the first supported framework.** The core is framework-agnostic by design.
 
-## What makes it different
+<!-- TODO(v0.1.0): screenshot / GIF of the UI rendering a real project -->
 
-| Tool          | Purpose                        |
-| ------------- | ------------------------------ |
-| Telescope     | Runtime debugging              |
-| Horizon       | Queue monitoring               |
-| Pulse         | Performance metrics            |
-| PHP Insights  | Code quality                   |
-| **CodeAtlas** | **Architecture understanding** |
+## Quick start
 
-CodeAtlas never executes your code. It never modifies your code. It reads, analyzes, and visualizes — that's it.
+```bash
+# 1. Install into your Laravel app
+composer require codeatlas/laravel
+
+# 2. Analyze it
+php artisan codeatlas:analyze
+#    → storage/codeatlas/codeatlas-analysis.json
+
+# 3. Open the CodeAtlas UI and drop the JSON file in
+```
+
+That's it. Routes appear as an interactive graph: what URI maps to which controller, which middleware guards it, what parameters and constraints it carries.
+
+```bash
+# Useful variations
+php artisan codeatlas:scan                       # discovery dry run — what would be analyzed?
+php artisan codeatlas:analyze --analyzer=routes  # run specific analyzers only
+php artisan codeatlas:analyze --output=/tmp/x    # custom output directory
+php artisan codeatlas:analyze --compact          # minified JSON
+php artisan vendor:publish --tag=codeatlas-config
+```
+
+## What CodeAtlas is (and is not)
+
+| | |
+|---|---|
+| **Is** | Static analysis · architecture visualization · read-only |
+| **Is not** | A runtime debugger (Telescope) · a queue monitor (Horizon) · a profiler (Pulse) · a code-quality tool (PHPStan) |
+
+CodeAtlas **never executes your code**, never modifies it, and never sends it anywhere. All analysis is local, AST-based (`nikic/php-parser`), and read-only.
 
 ## How it works
 
 ```
-Source Code → Scanner → AST Parser → Analyzer → JSON → Interactive Graph
+Source Code → Scanner → AST Parser → Analyzer → DTO → JSON → UI
 ```
 
-- **AST-based** — powered by [nikic/php-parser](https://github.com/nikic/PHP-Parser), never regex
-- **Plugin architecture** — every analyzer is an independent, replaceable package
-- **JSON contract** — the UI only ever consumes JSON, never touches PHP
+Data flows one direction. JSON is the only contract between the PHP backend and the TypeScript UI — nothing else crosses the boundary.
 
-## Tech stack
+## Packages
 
-**Backend:** PHP 8.3+, nikic/php-parser, Symfony Finder, Pest, PHPStan
-**Frontend:** React, TypeScript, Vite, Tailwind, React Flow, Monaco Editor
-**Desktop:** Tauri
+| Package | Role |
+|---|---|
+| `codeatlas/contracts` | Interfaces, enums, value objects — zero dependencies |
+| `codeatlas/core` | DI container, config, events, PSR-3 logging, AST parser, plugin loader, pipeline runner |
+| `codeatlas/scanner` | File discovery + classification, framework detection |
+| `codeatlas/analyzer-routes` | Laravel route extraction (verbs, groups, resources, middleware, constraints) |
+| `codeatlas/exporter-json` | The canonical schema document |
+| `codeatlas/laravel` | ServiceProvider + artisan commands — the only Laravel-specific package |
+| `@codeatlas/web` | React UI: sidebar, React Flow graph canvas, inspector |
 
-## Status
+## v0.1.0 — "First Light"
 
-🚧 **Under active development.** Follow the [roadmap](.claude/ROADMAP.md) for progress. First release (v0.1.0) will include the Route Visualizer.
+The complete vertical slice: install → analyze → visualize, for **routes**. Coming next per the [roadmap](ROADMAP.md): middleware & controller analyzers (v0.2), services & repositories (v0.3), models & database (v0.4), events & jobs (v0.5), the full dependency graph (v0.7), desktop app (v0.8), VS Code extension (v0.9).
 
 ## Development
 
 ```bash
-git clone https://github.com/novaprime-code/codeatlas.git
-cd codeatlas
-make install    # composer + pnpm install
-make check      # lint + analyze + test
-make help       # see all commands
-
+git clone https://github.com/novaprime-code/codeatlas.git && cd codeatlas
+make install     # composer + pnpm
+make test        # Pest + Vitest across all packages
+make lint        # Pint + PHPStan + ESLint
 ```
 
-See [CONTRIBUTING.md](.claude/CONTRIBUTING.md) for the full development workflow.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow, commit conventions, and the Definition of Done. Architecture rules live in [ARCHITECTURE.md](ARCHITECTURE.md); the JSON contract in [JSON_SCHEMA.md](JSON_SCHEMA.md).
 
 ## License
 
