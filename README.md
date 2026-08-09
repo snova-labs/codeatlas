@@ -88,4 +88,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow, commit conventions, and
 
 ## License
 
-MIT © [Snova Labs](https://github.com/novaprime-code)
+MIT © [Snova Labs](https://github.com/snova-labs)
