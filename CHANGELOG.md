@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+_Nothing yet — next up: v0.2.0 "Connections" (middleware + controller analyzers)._
+
+## [0.1.0] — 2026-07-11 — "First Light"
+
 ### Added — Phase 4 Web UI MVP (Sprint 4.2)
 
 - **LoadScreen**: drag-and-drop or file-picker loading of `codeatlas-analysis.json` with human-readable validation errors
@@ -18,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TypeScript types synchronized with actual backend output (nullable fields, `absolute_path`, route metadata shape)
 - UI test fixture is genuine PHP-pipeline output, not handwritten JSON
 - 26 Vitest tests (loader, layout, sidebar, inspector, load screen, app shell)
+
 
 ### Added — Phase 4 Laravel Bridge (Sprint 4.1)
 
@@ -34,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **PipelineRunner** now enriches the `ExportConfig` with project metadata (from the scanned `ProjectContext`) and elapsed duration before invoking exporters; caller-provided options win on conflict
 - **Container**: optional class-typed constructor parameters (e.g. `?Parser $parser = null`) now fall back to their default value when the type cannot be resolved, instead of throwing
 
+
 ### Added — Phase 3 JSON Exporter (Sprint 3.2)
 
 - **JsonExporter** (`CodeAtlas\Exporters\Json`): the canonical exporter producing the complete JSON_SCHEMA.md document — `$schema`, `version`, `project`, `analysis`, `graph`, `results`, `errors`
@@ -48,21 +54,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 **The backend pipeline is complete: Source → Scanner → AST → Analyzer → DTO → JSON.**
 
 ### Added — Phase 3 Route Analyzer (Sprint 3.1)
-
 - RouteAnalyzer with full group/resource/closure support, fault isolation, graph output
 
 ### Added — Phase 2 Scanner (Sprint 2.1)
-
 - Scanner, DirectoryWalker, FileClassifier, ComposerReader, FrameworkDetector
 
 ### Added — Phase 1 Core (Sprint 1.2)
-
 - Container, Config, EventBus, Logger, PhpParser, PluginLoader, PipelineRunner
 
 ### Added — Phase 1 Contracts (Sprint 1.1)
-
 - Interfaces, enums, graph primitives, value objects, exception hierarchy
 
 ### Added — Phase 0 Infrastructure (Sprint 0.1)
-
 - Monorepo scaffolding, tooling, CI, git hooks, project management setup
