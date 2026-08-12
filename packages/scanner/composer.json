@@ -1,44 +1,56 @@
 {
-    "name": "codeatlas/scanner",
-    "description": "CodeAtlas scanner — project file discovery and classification.",
-    "type": "library",
-    "license": "MIT",
-    "keywords": ["codeatlas", "scanner", "file-discovery"],
-    "authors": [
-        {
-            "name": "Snova Labs",
-            "homepage": "https://github.com/novaprime-code"
+  "name": "codeatlas/scanner",
+  "description": "CodeAtlas scanner - project file discovery and classification.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "codeatlas",
+    "scanner",
+    "file-discovery"
+  ],
+  "authors": [
+    {
+      "name": "Jay Patel",
+      "email": "novaprime-code@users.noreply.github.com",
+      "homepage": "https://github.com/novaprime-code",
+      "role": "Core Contributors"
     },
     {
-      "name": "Snova Code",
-      "homepage": "https://github.com/snova-code"
-        }
-    ],
-    "require": {
-        "php": "^8.3",
-        "codeatlas/contracts": "@dev",
-        "codeatlas/core": "@dev",
-        "symfony/finder": "^7.0"
-    },
-    "require-dev": {
-        "pestphp/pest": "^3.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "CodeAtlas\\Scanner\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "CodeAtlas\\Scanner\\Tests\\": "tests/"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
+      "name": "Ishwari Raut",
+      "email": "snova-code@users.noreply.github.com",
+      "homepage": "https://github.com/snova-code",
+      "role": "Core Contributors"
     }
+  ],
+  "support": {
+    "issues": "https://github.com/snova-labs/codeatlas/issues",
+    "source": "https://github.com/snova-labs/codeatlas"
+  },
+  "require": {
+    "php": "^8.3",
+    "codeatlas/contracts": "@dev",
+    "codeatlas/core": "@dev",
+    "symfony/finder": "^7.0"
+  },
+  "require-dev": {
+    "pestphp/pest": "^3.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "CodeAtlas\\Scanner\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CodeAtlas\\Scanner\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
 }

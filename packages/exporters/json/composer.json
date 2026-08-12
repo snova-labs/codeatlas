@@ -1,43 +1,55 @@
 {
-    "name": "codeatlas/exporter-json",
-    "description": "CodeAtlas JSON exporter — canonical JSON output conforming to the CodeAtlas schema.",
-    "type": "library",
-    "license": "MIT",
-    "keywords": ["codeatlas", "exporter", "json"],
-    "authors": [
-        {
-            "name": "Snova Labs",
-            "homepage": "https://github.com/novaprime-code"
+  "name": "codeatlas/exporter-json",
+  "description": "CodeAtlas JSON exporter — canonical JSON output conforming to the CodeAtlas schema.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "codeatlas",
+    "exporter",
+    "json"
+  ],
+  "authors": [
+    {
+      "name": "Jay Patel",
+      "email": "novaprime-code@users.noreply.github.com",
+      "homepage": "https://github.com/novaprime-code",
+      "role": "Core Contributors"
     },
     {
-      "name": "Snova Code",
-      "homepage": "https://github.com/snova-code"
-        }
-    ],
-    "require": {
-        "php": "^8.3",
-        "codeatlas/contracts": "@dev",
-        "codeatlas/core": "@dev"
-    },
-    "require-dev": {
-        "pestphp/pest": "^3.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "CodeAtlas\\Exporters\\Json\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "CodeAtlas\\Exporters\\Json\\Tests\\": "tests/"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
+      "name": "Ishwari Raut",
+      "email": "snova-code@users.noreply.github.com",
+      "homepage": "https://github.com/snova-code",
+      "role": "Core Contributors"
     }
+  ],
+  "support": {
+    "issues": "https://github.com/snova-labs/codeatlas/issues",
+    "source": "https://github.com/snova-labs/codeatlas"
+  },
+  "require": {
+    "php": "^8.3",
+    "codeatlas/contracts": "@dev",
+    "codeatlas/core": "@dev"
+  },
+  "require-dev": {
+    "pestphp/pest": "^3.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "CodeAtlas\\Exporters\\Json\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CodeAtlas\\Exporters\\Json\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
 }
