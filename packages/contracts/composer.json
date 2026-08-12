@@ -10,10 +10,22 @@
   ],
   "authors": [
     {
-      "name": "Snova Labs",
-      "homepage": "https://github.com/novaprime-code"
+      "name": "Jay Patel",
+      "email": "novaprime-code@users.noreply.github.com",
+      "homepage": "https://github.com/novaprime-code",
+      "role": "Core Contributors"
+    },
+    {
+      "name": "Ishwari Raut",
+      "email": "snova-code@users.noreply.github.com",
+      "homepage": "https://github.com/snova-code",
+      "role": "Core Contributors"
     }
   ],
+  "support": {
+    "issues": "https://github.com/snova-labs/codeatlas/issues",
+    "source": "https://github.com/snova-labs/codeatlas"
+  },
   "require": {
     "php": "^8.3"
   },
