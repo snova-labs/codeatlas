@@ -6,7 +6,10 @@
   "keywords": [
     "codeatlas",
     "contracts",
-    "interfaces"
+    "interfaces",
+    "enums",
+    "value-objects",
+    "plugin-api"
   ],
   "authors": [
     {
@@ -40,6 +43,11 @@
   "autoload-dev": {
     "psr-4": {
       "CodeAtlas\\Contracts\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "0.1.x-dev"
     }
   },
   "minimum-stability": "stable",

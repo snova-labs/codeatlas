@@ -6,7 +6,11 @@
   "keywords": [
     "codeatlas",
     "scanner",
-    "file-discovery"
+    "file-discovery",
+    "file-classification",
+    "static-analysis",
+    "ast",
+    "visualization"
   ],
   "authors": [
     {
@@ -28,8 +32,8 @@
   },
   "require": {
     "php": "^8.3",
-    "codeatlas/contracts": "@dev",
-    "codeatlas/core": "@dev",
+    "codeatlas/contracts": "^0.1.0",
+    "codeatlas/core": "^0.1.0",
     "symfony/finder": "^7.0"
   },
   "require-dev": {
@@ -43,6 +47,11 @@
   "autoload-dev": {
     "psr-4": {
       "CodeAtlas\\Scanner\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "0.1.x-dev"
     }
   },
   "minimum-stability": "dev",

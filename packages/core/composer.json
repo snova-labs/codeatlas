@@ -7,7 +7,8 @@
     "codeatlas",
     "core",
     "static-analysis",
-    "ast"
+    "ast",
+    "visualization"
   ],
   "authors": [
     {
@@ -29,7 +30,7 @@
   },
   "require": {
     "php": "^8.3",
-    "codeatlas/contracts": "@dev",
+    "codeatlas/contracts": "^0.1.0",
     "nikic/php-parser": "^5.3",
     "psr/log": "^3.0"
   },
@@ -44,6 +45,11 @@
   "autoload-dev": {
     "psr-4": {
       "CodeAtlas\\Core\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "0.1.x-dev"
     }
   },
   "minimum-stability": "dev",

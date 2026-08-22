@@ -6,7 +6,9 @@
   "keywords": [
     "codeatlas",
     "exporter",
-    "json"
+    "json",
+    "schema",
+    "visualization"
   ],
   "authors": [
     {
@@ -28,8 +30,8 @@
   },
   "require": {
     "php": "^8.3",
-    "codeatlas/contracts": "@dev",
-    "codeatlas/core": "@dev"
+    "codeatlas/contracts": "^0.1.0",
+    "codeatlas/core": "^0.1.0"
   },
   "require-dev": {
     "pestphp/pest": "^3.5"
@@ -42,6 +44,11 @@
   "autoload-dev": {
     "psr-4": {
       "CodeAtlas\\Exporters\\Json\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "0.1.x-dev"
     }
   },
   "minimum-stability": "dev",

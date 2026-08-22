@@ -1,0 +1,6 @@
+/tests           export-ignore
+/benchmarks      export-ignore
+/phpstan.neon    export-ignore
+/pint.json       export-ignore
+/rector.php      export-ignore
+/.gitattributes  export-ignore
