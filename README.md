@@ -44,9 +44,9 @@ php artisan vendor:publish --tag=codeatlas-config
 
 ## What CodeAtlas is (and is not)
 
-| | |
-|---|---|
-| **Is** | Static analysis · architecture visualization · read-only |
+|            |                                                                                                                 |
+| ---------- | --------------------------------------------------------------------------------------------------------------- |
+| **Is**     | Static analysis · architecture visualization · read-only                                                        |
 | **Is not** | A runtime debugger (Telescope) · a queue monitor (Horizon) · a profiler (Pulse) · a code-quality tool (PHPStan) |
 
 CodeAtlas **never executes your code**, never modifies it, and never sends it anywhere. All analysis is local, AST-based (`nikic/php-parser`), and read-only.
@@ -61,15 +61,15 @@ Data flows one direction. JSON is the only contract between the PHP backend and 
 
 ## Packages
 
-| Package | Role |
-|---|---|
-| `codeatlas/contracts` | Interfaces, enums, value objects — zero dependencies |
-| `codeatlas/core` | DI container, config, events, PSR-3 logging, AST parser, plugin loader, pipeline runner |
-| `codeatlas/scanner` | File discovery + classification, framework detection |
-| `codeatlas/analyzer-routes` | Laravel route extraction (verbs, groups, resources, middleware, constraints) |
-| `codeatlas/exporter-json` | The canonical schema document |
-| `codeatlas/laravel` | ServiceProvider + artisan commands — the only Laravel-specific package |
-| `@codeatlas/web` | React UI: sidebar, React Flow graph canvas, inspector |
+| Package                     | Role                                                                                    |
+| --------------------------- | --------------------------------------------------------------------------------------- |
+| `codeatlas/contracts`       | Interfaces, enums, value objects — zero dependencies                                    |
+| `codeatlas/core`            | DI container, config, events, PSR-3 logging, AST parser, plugin loader, pipeline runner |
+| `codeatlas/scanner`         | File discovery + classification, framework detection                                    |
+| `codeatlas/analyzer-routes` | Laravel route extraction (verbs, groups, resources, middleware, constraints)            |
+| `codeatlas/exporter-json`   | The canonical schema document                                                           |
+| `codeatlas/laravel`         | ServiceProvider + artisan commands — the only Laravel-specific package                  |
+| `@codeatlas/web`            | React UI: sidebar, React Flow graph canvas, inspector                                   |
 
 ## v0.1.0 — "First Light"
 
@@ -78,7 +78,7 @@ The complete vertical slice: install → analyze → visualize, for **routes**. 
 ## Development
 
 ```bash
-git clone https://github.com/novaprime-code/codeatlas.git && cd codeatlas
+git clone https://github.com/snova-labs/codeatlas.git && cd codeatlas
 make install     # composer + pnpm
 make test        # Pest + Vitest across all packages
 make lint        # Pint + PHPStan + ESLint

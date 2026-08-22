@@ -7,7 +7,10 @@
     "codeatlas",
     "analyzer",
     "routes",
-    "laravel"
+    "laravel",
+    "static-analysis",
+    "ast",
+    "visualization"
   ],
   "authors": [
     {
@@ -29,8 +32,8 @@
   },
   "require": {
     "php": "^8.3",
-    "codeatlas/contracts": "@dev",
-    "codeatlas/core": "@dev"
+    "codeatlas/contracts": "^0.1.0",
+    "codeatlas/core": "^0.1.0"
   },
   "require-dev": {
     "pestphp/pest": "^3.5"
@@ -43,6 +46,11 @@
   "autoload-dev": {
     "psr-4": {
       "CodeAtlas\\Analyzers\\Routes\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "0.1.x-dev"
     }
   },
   "minimum-stability": "dev",
