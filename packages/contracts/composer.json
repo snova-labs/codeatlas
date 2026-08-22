@@ -8,8 +8,7 @@
     "contracts",
     "interfaces",
     "enums",
-    "value-objects",
-    "plugin-api"
+    "value-objects"
   ],
   "authors": [
     {
