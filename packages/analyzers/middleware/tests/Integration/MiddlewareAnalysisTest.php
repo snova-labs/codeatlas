@@ -18,7 +18,7 @@ describe('MiddlewareAnalyzer — full pipeline', function (): void {
         $context = Scanner::default()->scan(l11App());
         $result = (new MiddlewareAnalyzer(new PhpParser()))->analyze($context);
 
-        $ids = array_map(fn ($n): string => $n->id(), $result->nodes);
+        $ids = array_map(fn($n): string => $n->id(), $result->nodes);
 
         expect($ids)->toContain(
             'middleware::admin',
@@ -62,7 +62,7 @@ describe('MiddlewareAnalyzer — full pipeline', function (): void {
         $middleware = (new MiddlewareAnalyzer(new PhpParser()))->analyze($context);
         $routes = (new RouteAnalyzer(new PhpParser()))->analyze($context);
 
-        $middlewareIds = array_map(fn ($n): string => $n->id(), $middleware->nodes);
+        $middlewareIds = array_map(fn($n): string => $n->id(), $middleware->nodes);
 
         foreach ($routes->edges as $edge) {
             if (str_starts_with($edge->target(), 'middleware::')) {
@@ -75,7 +75,7 @@ describe('MiddlewareAnalyzer — full pipeline', function (): void {
         $context = Scanner::default()->scan(l11App());
         $routes = (new RouteAnalyzer(new PhpParser()))->analyze($context);
 
-        $targets = array_map(fn ($e): string => $e->target(), $routes->edges);
+        $targets = array_map(fn($e): string => $e->target(), $routes->edges);
 
         expect($targets)->toContain('middleware::admin');
         expect($targets)->not->toContain('middleware::admin:super');
@@ -98,7 +98,7 @@ describe('MiddlewareAnalyzer — full pipeline', function (): void {
             $result = (new MiddlewareAnalyzer(new PhpParser()))->analyze($context);
 
             expect($result->errors)->toHaveCount(1);
-            expect(array_map(fn ($n): string => $n->id(), $result->nodes))->toContain('middleware::Ok');
+            expect(array_map(fn($n): string => $n->id(), $result->nodes))->toContain('middleware::Ok');
         } finally {
             @unlink($tmp . '/bootstrap/app.php');
             @unlink($tmp . '/app/Http/Middleware/Ok.php');

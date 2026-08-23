@@ -57,7 +57,7 @@ final class CodeAtlasFactory
         );
 
         $container->singleton(ParserInterface::class, PhpParser::class);
-        $container->singleton(ScannerInterface::class, static fn (): Scanner => Scanner::default());
+        $container->singleton(ScannerInterface::class, static fn(): Scanner => Scanner::default());
 
         $loader = new PluginLoader($container);
         $loader->registerMany([

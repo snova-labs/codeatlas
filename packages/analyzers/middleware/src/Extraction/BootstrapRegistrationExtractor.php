@@ -123,7 +123,7 @@ final class BootstrapRegistrationExtractor
     {
         $param = $closure->params[0] ?? null;
 
-        if ($param === null || !$param->var instanceof \PhpParser\Node\Expr\Variable) {
+        if ($param === null || !$param->var instanceof Expr\Variable) {
             return null;
         }
 
@@ -165,7 +165,7 @@ final class BootstrapRegistrationExtractor
             $expr = $expr->var;
         }
 
-        return $expr instanceof \PhpParser\Node\Expr\Variable && $expr->name === $name;
+        return $expr instanceof Expr\Variable && $expr->name === $name;
     }
 
     private function chainLength(Expr $expr): int
