@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CodeAtlas\Analyzers\Routes\Extraction;
 
-use CodeAtlas\Core\Parser\ParsedFile;
+use CodeAtlas\Contracts\ParsedFileInterface;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
@@ -29,7 +29,7 @@ use PhpParser\Node\Scalar\String_;
  */
 final class ValueResolver
 {
-    public function __construct(private readonly ParsedFile $file) {}
+    public function __construct(private readonly ParsedFileInterface $file) {}
 
     /**
      * Resolve an argument to a plain string, if it is a string literal.
@@ -97,6 +97,13 @@ final class ValueResolver
         $constName = $expr->name;
         if (!$constName instanceof Identifier || $constName->toString() !== 'class') {
             return null;
+        }
+
+        // \Absolute\Refs parse as FullyQualified — already resolved; running
+        // them through use-statement resolution would wrongly prepend the
+        // file's namespace.
+        if ($expr->class->isFullyQualified()) {
+            return ltrim($expr->class->toString(), '\\');
         }
 
         return $this->file->resolveClassName($expr->class->toString());

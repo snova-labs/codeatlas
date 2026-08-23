@@ -1,0 +1,40 @@
+{
+    "name": "codeatlas/analyzer-middleware",
+    "description": "CodeAtlas middleware analyzer — extracts middleware classes, aliases, groups, and priority from Laravel applications.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["codeatlas", "laravel", "middleware", "static-analysis"],
+    "authors": [
+        {
+            "name": "Snova Labs",
+            "homepage": "https://github.com/novaprime-code"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "codeatlas/contracts": "@dev",
+        "codeatlas/core": "@dev",
+        "psr/log": "^3.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "CodeAtlas\\Analyzers\\Middleware\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CodeAtlas\\Analyzers\\Middleware\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
