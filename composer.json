@@ -39,6 +39,7 @@
     "codeatlas/scanner": "@dev",
     "codeatlas/laravel": "@dev",
     "codeatlas/analyzer-routes": "@dev",
+    "codeatlas/analyzer-middleware": "@dev",
     "codeatlas/exporter-json": "@dev",
     "laravel/pint": "^1.18",
     "pestphp/pest": "^3.5",
@@ -54,6 +55,7 @@
       "CodeAtlas\\Scanner\\Tests\\": "packages/scanner/tests/",
       "CodeAtlas\\Laravel\\Tests\\": "packages/laravel/tests/",
       "CodeAtlas\\Analyzers\\Routes\\Tests\\": "packages/analyzers/routes/tests/",
+      "CodeAtlas\\Analyzers\\Middleware\\Tests\\": "packages/analyzers/middleware/tests/",
       "CodeAtlas\\Exporters\\Json\\Tests\\": "packages/exporters/json/tests/"
     },
     "exclude-from-classmap": [
@@ -92,6 +94,13 @@
     {
       "type": "path",
       "url": "packages/analyzers/routes",
+      "options": {
+        "symlink": true
+      }
+    },
+    {
+      "type": "path",
+      "url": "packages/analyzers/middleware",
       "options": {
         "symlink": true
       }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CodeAtlas\Analyzers\Routes\Extraction;
 
-use CodeAtlas\Contracts\ParsedFileInterface;
+use CodeAtlas\Core\Parser\ParsedFile;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
@@ -29,7 +29,7 @@ use PhpParser\Node\Scalar\String_;
  */
 final class ValueResolver
 {
-    public function __construct(private readonly ParsedFileInterface $file) {}
+    public function __construct(private readonly ParsedFile $file) {}
 
     /**
      * Resolve an argument to a plain string, if it is a string literal.
