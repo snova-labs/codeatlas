@@ -1,0 +1,59 @@
+{
+    "name": "codeatlas/analyzer-controllers",
+    "description": "CodeAtlas controller analyzer — extracts controller classes, methods, dependencies, traits, and inheritance from Laravel applications.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "codeatlas", 
+        "laravel", 
+        "controllers", 
+        "static-analysis",
+        "ast",
+        "visualization"
+    ],
+    "authors": [
+        {
+            "name": "Jay Patel",
+            "email": "novaprime-code@users.noreply.github.com",
+            "homepage": "https://github.com/novaprime-code",
+            "role": "Core Contributors"
+        },
+        {
+            "name": "Ishwari Raut",
+            "email": "snova-code@users.noreply.github.com",
+            "homepage": "https://github.com/snova-code",
+            "role": "Core Contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/snova-labs/codeatlas/issues",
+        "source": "https://github.com/snova-labs/codeatlas"
+    },
+    "require": {
+        "php": "^8.3",
+        "codeatlas/contracts": "^0.1.0",
+        "codeatlas/core": "^0.1.0",
+        "psr/log": "^3.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "CodeAtlas\\Analyzers\\Controllers\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CodeAtlas\\Analyzers\\Controllers\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

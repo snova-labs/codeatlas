@@ -1,17 +1,17 @@
 {
-  "name": "codeatlas/codeatlas",
-  "description": "CodeAtlas — Visual Architecture Explorer. See your codebase. Understand your architecture.",
-  "type": "project",
-  "license": "MIT",
-  "keywords": [
-    "laravel",
-    "static-analysis",
-    "architecture",
-    "visualization",
-    "developer-tools",
-    "ast",
-    "code-analysis"
-  ],
+    "name": "codeatlas/codeatlas",
+    "description": "CodeAtlas \u2014 Visual Architecture Explorer. See your codebase. Understand your architecture.",
+    "type": "project",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "static-analysis",
+        "architecture",
+        "visualization",
+        "developer-tools",
+        "ast",
+        "code-analysis"
+    ],
   "authors": [
     {
       "name": "Jay Patel",
@@ -30,123 +30,133 @@
     "issues": "https://github.com/snova-labs/codeatlas/issues",
     "source": "https://github.com/snova-labs/codeatlas"
   },
-  "require": {
-    "php": "^8.3"
-  },
-  "require-dev": {
-    "codeatlas/contracts": "@dev",
-    "codeatlas/core": "@dev",
-    "codeatlas/scanner": "@dev",
-    "codeatlas/laravel": "@dev",
-    "codeatlas/analyzer-routes": "@dev",
-    "codeatlas/analyzer-middleware": "@dev",
-    "codeatlas/exporter-json": "@dev",
-    "laravel/pint": "^1.18",
-    "pestphp/pest": "^3.5",
-    "phpstan/phpstan": "^2.0",
-    "orchestra/testbench": "^9.0|^10.0",
-    "rector/rector": "^2.0",
-    "phpbench/phpbench": "^1.3"
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "CodeAtlas\\Contracts\\Tests\\": "packages/contracts/tests/",
-      "CodeAtlas\\Core\\Tests\\": "packages/core/tests/",
-      "CodeAtlas\\Scanner\\Tests\\": "packages/scanner/tests/",
-      "CodeAtlas\\Laravel\\Tests\\": "packages/laravel/tests/",
-      "CodeAtlas\\Analyzers\\Routes\\Tests\\": "packages/analyzers/routes/tests/",
-      "CodeAtlas\\Analyzers\\Middleware\\Tests\\": "packages/analyzers/middleware/tests/",
-      "CodeAtlas\\Exporters\\Json\\Tests\\": "packages/exporters/json/tests/"
+    "require": {
+        "codeatlas/analyzer-controllers": "@dev",
+        "codeatlas/analyzer-middleware": "@dev",
+        "php": "^8.3"
     },
-    "exclude-from-classmap": [
-      "packages/**/tests/Fixtures/"
-    ]
-  },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "packages/contracts",
-      "options": {
-        "symlink": true
-      }
+    "require-dev": {
+        "codeatlas/contracts": "@dev",
+        "codeatlas/core": "@dev",
+        "codeatlas/scanner": "@dev",
+        "codeatlas/laravel": "@dev",
+        "codeatlas/analyzer-routes": "@dev",
+        "codeatlas/analyzer-middleware": "@dev",
+        "codeatlas/exporter-json": "@dev",
+        "laravel/pint": "^1.18",
+        "pestphp/pest": "^3.5",
+        "phpstan/phpstan": "^2.0",
+        "orchestra/testbench": "^9.0|^10.0",
+        "rector/rector": "^2.0",
+        "phpbench/phpbench": "^1.3"
     },
-    {
-      "type": "path",
-      "url": "packages/core",
-      "options": {
-        "symlink": true
-      }
+    "autoload-dev": {
+        "psr-4": {
+        "CodeAtlas\\Contracts\\Tests\\": "packages/contracts/tests/",
+        "CodeAtlas\\Core\\Tests\\": "packages/core/tests/",
+        "CodeAtlas\\Scanner\\Tests\\": "packages/scanner/tests/",
+        "CodeAtlas\\Laravel\\Tests\\": "packages/laravel/tests/",
+        "CodeAtlas\\Analyzers\\Routes\\Tests\\": "packages/analyzers/routes/tests/",
+        "CodeAtlas\\Analyzers\\Controllers\\Tests\\": "packages/analyzers/controllers/tests/",
+        "CodeAtlas\\Analyzers\\Middleware\\Tests\\": "packages/analyzers/middleware/tests/",
+        "CodeAtlas\\Exporters\\Json\\Tests\\": "packages/exporters/json/tests/"
+        },
+        "exclude-from-classmap": [
+        "packages/**/tests/Fixtures/"
+        ]
     },
-    {
-      "type": "path",
-      "url": "packages/scanner",
-      "options": {
-        "symlink": true
-      }
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/contracts",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "packages/core",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "packages/scanner",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "packages/laravel",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "packages/analyzers/routes",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "packages/analyzers/controllers",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "packages/analyzers/middleware",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "packages/exporters/json",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "8.3.0"
+        },
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
-    {
-      "type": "path",
-      "url": "packages/laravel",
-      "options": {
-        "symlink": true
-      }
+    "scripts": {
+        "test": "pest",
+        "test:coverage": "pest --coverage --min=90",
+        "lint": "pint --test",
+        "lint:fix": "pint",
+        "analyze": "phpstan analyse --memory-limit=1G",
+        "rector": "rector process --dry-run",
+        "rector:fix": "rector process",
+        "check": [
+            "@lint",
+            "@analyze",
+            "@test"
+        ]
     },
-    {
-      "type": "path",
-      "url": "packages/analyzers/routes",
-      "options": {
-        "symlink": true
-      }
-    },
-    {
-      "type": "path",
-      "url": "packages/analyzers/middleware",
-      "options": {
-        "symlink": true
-      }
-    },
-    {
-      "type": "path",
-      "url": "packages/exporters/json",
-      "options": {
-        "symlink": true
-      }
+    "scripts-descriptions": {
+        "test": "Run all Pest tests",
+        "test:coverage": "Run tests with coverage report (minimum 90%)",
+        "lint": "Check code style with Pint (no changes)",
+        "lint:fix": "Fix code style with Pint",
+        "analyze": "Run PHPStan static analysis",
+        "rector": "Preview Rector refactoring suggestions",
+        "rector:fix": "Apply Rector refactoring",
+        "check": "Run lint + analyze + test (full CI check)"
     }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "config": {
-    "sort-packages": true,
-    "optimize-autoloader": true,
-    "platform": {
-      "php": "8.3.0"
-    },
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
-    }
-  },
-  "scripts": {
-    "test": "pest",
-    "test:coverage": "pest --coverage --min=90",
-    "lint": "pint --test",
-    "lint:fix": "pint",
-    "analyze": "phpstan analyse --memory-limit=1G",
-    "rector": "rector process --dry-run",
-    "rector:fix": "rector process",
-    "check": [
-      "@lint",
-      "@analyze",
-      "@test"
-    ]
-  },
-  "scripts-descriptions": {
-    "test": "Run all Pest tests",
-    "test:coverage": "Run tests with coverage report (minimum 90%)",
-    "lint": "Check code style with Pint (no changes)",
-    "lint:fix": "Fix code style with Pint",
-    "analyze": "Run PHPStan static analysis",
-    "rector": "Preview Rector refactoring suggestions",
-    "rector:fix": "Apply Rector refactoring",
-    "check": "Run lint + analyze + test (full CI check)"
-  }
 }
