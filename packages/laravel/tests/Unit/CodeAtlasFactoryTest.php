@@ -15,7 +15,7 @@ describe('CodeAtlasFactory', function (): void {
 
         expect($container->has(ParserInterface::class))->toBeTrue();
         expect($container->has(ScannerInterface::class))->toBeTrue();
-        expect($container->tagged(PluginLoader::TAG_ANALYZER))->toHaveCount(2);
+        expect($container->tagged(PluginLoader::TAG_ANALYZER))->toHaveCount(3);
         expect($container->tagged(PluginLoader::TAG_EXPORTER))->toHaveCount(1);
     });
 
@@ -35,7 +35,7 @@ describe('CodeAtlasFactory', function (): void {
         );
 
         expect($result->context->framework)->toBe('laravel');
-        expect($result->graph->nodeCount())->toBe(4);
+        expect($result->graph->nodeCount())->toBe(5);
         expect($result->errorCount())->toBe(0);
         expect($result->exports)->toHaveKey('json');
     });
