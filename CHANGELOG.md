@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Phase 5 Controller Analyzer (Sprint 5.2)
+
+- **ControllerAnalyzer** (`CodeAtlas\Analyzers\Controllers`): extracts controller classes with methods, constructor-injected dependencies, traits, interfaces, and inheritance
+- Method extraction includes visibility, line ranges, typed parameters (nullable/union/intersection types rendered to source form), pretty-printed default values, and PHP 8 attributes resolved through aliased imports
+- **Typed DependsOn edges** by namespace convention: `App\Services\*` → `service::`, `App\Repositories\*` → `repository::`, `App\Models\*` → `model::` — labeled with the constructor parameter name
+- **Extends / Implements / UsesTrait** edges for the class hierarchy
+- Controller node IDs (`controller::{fqcn}`) match the route analyzer's `RoutesTo` targets: with all three analyzers running, the merged graph has zero dangling endpoints and the UI no longer needs placeholder nodes
+- **ControllerAnalyzerPlugin** registered in `CodeAtlasFactory`
+
 ### Added — Phase 5 Middleware Analyzer (Sprint 5.1)
 
 - **MiddlewareAnalyzer** (`CodeAtlas\Analyzers\Middleware`): extracts middleware classes, aliases, groups, priority, and global registration

@@ -76,15 +76,36 @@ Nova's local steps (see RELEASE_RUNBOOK.md):
 
 **Cumulative runtime assertions: 455 across 7 packages.**
 
-## Active: Sprint 5.2 — Controller Analyzer
+### Sprint 5.2 — Controller Analyzer ✅
+- ✅ DTOs: ControllerData, MethodData, ParameterData, DependencyData
+- ✅ ControllerExtractor: identity, parent/interfaces/traits (FQCN-resolved),
+      methods with visibility + typed params (nullable/union/intersection to
+      source form) + pretty-printed defaults + PHP attributes via aliased
+      imports, constructor deps (nullable-unwrapped), abstract/invokable flags
+- ✅ ControllerAnalyzer: controller nodes (ID controller::{fqcn}),
+      Extends/Implements/UsesTrait edges, typed DependsOn edges by namespace
+      convention (Services→service, Repositories→repository, Models→model),
+      methods in metadata (method nodes deferred to v0.7 dependency graph)
+- ✅ Plugin registered in CodeAtlasFactory — codeatlas:analyze runs all three
+- ✅ Fixture app: base + full-featured + invokable controllers, trait, service,
+      middleware, bootstrap, routes — built for the three-analyzer join
+- ✅ **Runtime verification: 51/51** (extractor matrix, analyzer, edges, isolation)
+- ✅ **THREE-ANALYZER JOIN: 9/9** — routes + middleware + controllers in one
+      merged 7-node graph; every RoutesTo and UsesMiddleware edge resolves;
+      JSON document carries all three result blocks
 
-- Parse controller classes: methods, visibility, parameters, return types, attributes
-- Constructor-injection dependency extraction
-- Traits, parent, interfaces
-- Controller nodes + controller_method nodes; replaces the UI's controller ghosts
-- Route → Controller edges then resolve to real nodes (same join exercise as middleware)
+**Cumulative runtime assertions: 515 across 8 packages.**
+**All UI ghost nodes are now obsolete — every edge endpoint is real.**
 
-## Backlog
+## Active: v0.2.0 "Connections" Release
 
-- v0.2.0 release after controller analyzer (ROADMAP "Connections")
-- UI: middleware group visualization, global-middleware badge
+- ⬜ Nova: local suites (Pest/PHPStan/Pint/Testbench) + real-app smoke
+- ⬜ CHANGELOG → [0.2.0]; release notes; tag
+- ⬜ UI polish pass: middleware group + inspector for controller methods/deps
+      (types already carry the data; render is generic-metadata fallback today)
+
+## Backlog (v0.3.0 — Sprint 6.x)
+
+- Service analyzer (App\Services): the DependsOn edges' targets become real
+- Repository analyzer
+- UI: dependency chain highlighting (route → controller → service)
