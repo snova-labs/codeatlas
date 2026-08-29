@@ -2,53 +2,23 @@
     "$schema": "https://codeatlas.dev/schema/v1/analysis.json",
     "version": "1.0.0",
     "project": {
-        "name": "demo/integration-app",
-        "path": "/home/claude/codeatlas/packages/analyzers/routes/tests/Fixtures/integration-app",
+        "name": "demo/controllers-app",
+        "path": "/home/claude/codeatlas/packages/analyzers/controllers/tests/Fixtures/app-full",
         "framework": "laravel",
         "framework_version": "^11.0",
         "php_version": "^8.3"
     },
     "analysis": {
-        "timestamp": "2026-07-11T21:18:45+00:00",
-        "duration_ms": 107,
+        "timestamp": "2026-07-12T22:49:19+00:00",
+        "duration_ms": 176,
         "analyzers": [
-            "routes"
+            "routes",
+            "middleware",
+            "controllers"
         ]
     },
     "graph": {
         "nodes": [
-            {
-                "id": "route::get::/",
-                "type": "route",
-                "label": "GET /",
-                "group": null,
-                "file": {
-                    "path": "routes/web.php",
-                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/routes/tests/Fixtures/integration-app/routes/web.php",
-                    "type": "route",
-                    "line_start": 6,
-                    "line_end": null
-                },
-                "metadata": {
-                    "uri": "/",
-                    "methods": [
-                        "GET"
-                    ],
-                    "name": null,
-                    "controller": null,
-                    "action": null,
-                    "is_closure": true,
-                    "middleware": [],
-                    "prefix": null,
-                    "domain": null,
-                    "where": {},
-                    "parameters": [],
-                    "line": 6
-                },
-                "tags": [
-                    "closure"
-                ]
-            },
             {
                 "id": "route::get::/users",
                 "type": "route",
@@ -56,7 +26,7 @@
                 "group": null,
                 "file": {
                     "path": "routes/web.php",
-                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/routes/tests/Fixtures/integration-app/routes/web.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/controllers/tests/Fixtures/app-full/routes/web.php",
                     "type": "route",
                     "line_start": 7,
                     "line_end": null
@@ -66,7 +36,7 @@
                     "methods": [
                         "GET"
                     ],
-                    "name": "users.index",
+                    "name": null,
                     "controller": "App\\Http\\Controllers\\UserController",
                     "action": "index",
                     "is_closure": false,
@@ -80,73 +50,275 @@
                     "line": 7
                 },
                 "tags": [
-                    "has-middleware",
-                    "named"
+                    "has-middleware"
                 ]
             },
             {
-                "id": "route::post::/users",
+                "id": "route::get::/users/{id}",
                 "type": "route",
-                "label": "POST /users",
+                "label": "GET /users/{id}",
                 "group": null,
                 "file": {
                     "path": "routes/web.php",
-                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/routes/tests/Fixtures/integration-app/routes/web.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/controllers/tests/Fixtures/app-full/routes/web.php",
                     "type": "route",
                     "line_start": 8,
                     "line_end": null
                 },
                 "metadata": {
-                    "uri": "/users",
+                    "uri": "/users/{id}",
                     "methods": [
-                        "POST"
+                        "GET"
                     ],
                     "name": null,
                     "controller": "App\\Http\\Controllers\\UserController",
-                    "action": "store",
+                    "action": "show",
+                    "is_closure": false,
+                    "middleware": [],
+                    "prefix": null,
+                    "domain": null,
+                    "where": {},
+                    "parameters": [
+                        "id"
+                    ],
+                    "line": 8
+                },
+                "tags": []
+            },
+            {
+                "id": "route::get::/health",
+                "type": "route",
+                "label": "GET /health",
+                "group": null,
+                "file": {
+                    "path": "routes/web.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/controllers/tests/Fixtures/app-full/routes/web.php",
+                    "type": "route",
+                    "line_start": 9,
+                    "line_end": null
+                },
+                "metadata": {
+                    "uri": "/health",
+                    "methods": [
+                        "GET"
+                    ],
+                    "name": null,
+                    "controller": "App\\Http\\Controllers\\HealthController",
+                    "action": "__invoke",
                     "is_closure": false,
                     "middleware": [],
                     "prefix": null,
                     "domain": null,
                     "where": {},
                     "parameters": [],
-                    "line": 8
+                    "line": 9
                 },
                 "tags": []
             },
             {
-                "id": "route::get::/api/users",
-                "type": "route",
-                "label": "GET /api/users",
-                "group": "api",
+                "id": "middleware::auth",
+                "type": "middleware",
+                "label": "auth",
+                "group": null,
                 "file": {
-                    "path": "routes/api.php",
-                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/routes/tests/Fixtures/integration-app/routes/api.php",
-                    "type": "route",
-                    "line_start": 7,
+                    "path": "app/Http/Middleware/Authenticate.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/controllers/tests/Fixtures/app-full/app/Http/Middleware/Authenticate.php",
+                    "type": "middleware",
+                    "line_start": 4,
                     "line_end": null
                 },
                 "metadata": {
-                    "uri": "/api/users",
-                    "methods": [
-                        "GET"
-                    ],
-                    "name": "api.users",
-                    "controller": "App\\Http\\Controllers\\UserController",
-                    "action": "index",
-                    "is_closure": false,
-                    "middleware": [
-                        "api"
-                    ],
-                    "prefix": "api",
-                    "domain": null,
-                    "where": {},
+                    "alias": "auth",
+                    "fqcn": "App\\Http\\Middleware\\Authenticate",
                     "parameters": [],
-                    "line": 7
+                    "groups": [],
+                    "priority": null,
+                    "global": false
                 },
                 "tags": [
-                    "has-middleware",
-                    "named"
+                    "aliased"
+                ]
+            },
+            {
+                "id": "controller::App\\Http\\Controllers\\HealthController",
+                "type": "controller",
+                "label": "HealthController",
+                "group": "App\\Http\\Controllers",
+                "file": {
+                    "path": "app/Http/Controllers/HealthController.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/controllers/tests/Fixtures/app-full/app/Http/Controllers/HealthController.php",
+                    "type": "controller",
+                    "line_start": 5,
+                    "line_end": null
+                },
+                "metadata": {
+                    "fqcn": "App\\Http\\Controllers\\HealthController",
+                    "name": "HealthController",
+                    "namespace": "App\\Http\\Controllers",
+                    "parent": "App\\Http\\Controllers\\Controller",
+                    "interfaces": [],
+                    "traits": [],
+                    "methods": [
+                        {
+                            "name": "__invoke",
+                            "visibility": "public",
+                            "parameters": [],
+                            "return_type": "string",
+                            "attributes": [],
+                            "line_start": 7,
+                            "line_end": 10
+                        }
+                    ],
+                    "dependencies": [],
+                    "abstract": false,
+                    "invokable": true
+                },
+                "tags": [
+                    "invokable"
+                ]
+            },
+            {
+                "id": "controller::App\\Http\\Controllers\\Controller",
+                "type": "controller",
+                "label": "Controller",
+                "group": "App\\Http\\Controllers",
+                "file": {
+                    "path": "app/Http/Controllers/Controller.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/controllers/tests/Fixtures/app-full/app/Http/Controllers/Controller.php",
+                    "type": "controller",
+                    "line_start": 5,
+                    "line_end": null
+                },
+                "metadata": {
+                    "fqcn": "App\\Http\\Controllers\\Controller",
+                    "name": "Controller",
+                    "namespace": "App\\Http\\Controllers",
+                    "parent": null,
+                    "interfaces": [],
+                    "traits": [],
+                    "methods": [
+                        {
+                            "name": "ok",
+                            "visibility": "protected",
+                            "parameters": [],
+                            "return_type": "string",
+                            "attributes": [],
+                            "line_start": 7,
+                            "line_end": 10
+                        }
+                    ],
+                    "dependencies": [],
+                    "abstract": true,
+                    "invokable": false
+                },
+                "tags": [
+                    "abstract"
+                ]
+            },
+            {
+                "id": "controller::App\\Http\\Controllers\\UserController",
+                "type": "controller",
+                "label": "UserController",
+                "group": "App\\Http\\Controllers",
+                "file": {
+                    "path": "app/Http/Controllers/UserController.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/controllers/tests/Fixtures/app-full/app/Http/Controllers/UserController.php",
+                    "type": "controller",
+                    "line_start": 13,
+                    "line_end": null
+                },
+                "metadata": {
+                    "fqcn": "App\\Http\\Controllers\\UserController",
+                    "name": "UserController",
+                    "namespace": "App\\Http\\Controllers",
+                    "parent": "App\\Http\\Controllers\\Controller",
+                    "interfaces": [
+                        "App\\Contracts\\Auditable"
+                    ],
+                    "traits": [
+                        "App\\Http\\Traits\\HasApiResponse"
+                    ],
+                    "methods": [
+                        {
+                            "name": "index",
+                            "visibility": "public",
+                            "parameters": [
+                                {
+                                    "name": "request",
+                                    "type": "Illuminate\\Http\\Request",
+                                    "nullable": false,
+                                    "default": null
+                                }
+                            ],
+                            "return_type": "Illuminate\\Http\\JsonResponse",
+                            "attributes": [],
+                            "line_start": 22,
+                            "line_end": 25
+                        },
+                        {
+                            "name": "show",
+                            "visibility": "public",
+                            "parameters": [
+                                {
+                                    "name": "request",
+                                    "type": "Illuminate\\Http\\Request",
+                                    "nullable": false,
+                                    "default": null
+                                },
+                                {
+                                    "name": "id",
+                                    "type": "int",
+                                    "nullable": false,
+                                    "default": null
+                                },
+                                {
+                                    "name": "format",
+                                    "type": "?string",
+                                    "nullable": true,
+                                    "default": "'json'"
+                                }
+                            ],
+                            "return_type": "Illuminate\\Http\\JsonResponse|string",
+                            "attributes": [
+                                "Illuminate\\Routing\\Controllers\\Middleware"
+                            ],
+                            "line_start": 27,
+                            "line_end": 31
+                        },
+                        {
+                            "name": "transform",
+                            "visibility": "protected",
+                            "parameters": [
+                                {
+                                    "name": "user",
+                                    "type": "App\\Models\\User",
+                                    "nullable": false,
+                                    "default": null
+                                }
+                            ],
+                            "return_type": "array",
+                            "attributes": [],
+                            "line_start": 33,
+                            "line_end": 36
+                        }
+                    ],
+                    "dependencies": [
+                        {
+                            "fqcn": "App\\Services\\UserService",
+                            "parameter": "userService",
+                            "type": "constructor"
+                        },
+                        {
+                            "fqcn": "App\\Models\\User",
+                            "parameter": "viewer",
+                            "type": "constructor"
+                        }
+                    ],
+                    "abstract": false,
+                    "invokable": false
+                },
+                "tags": [
+                    "has-dependencies"
                 ]
             }
         ],
@@ -168,35 +340,88 @@
                 "metadata": {}
             },
             {
-                "id": "edge::routes_to::route::post::/users->controller::App\\Http\\Controllers\\UserController",
-                "source": "route::post::/users",
+                "id": "edge::routes_to::route::get::/users/{id}->controller::App\\Http\\Controllers\\UserController",
+                "source": "route::get::/users/{id}",
                 "target": "controller::App\\Http\\Controllers\\UserController",
                 "type": "routes_to",
-                "label": "store",
+                "label": "show",
                 "metadata": {}
             },
             {
-                "id": "edge::routes_to::route::get::/api/users->controller::App\\Http\\Controllers\\UserController",
-                "source": "route::get::/api/users",
-                "target": "controller::App\\Http\\Controllers\\UserController",
+                "id": "edge::routes_to::route::get::/health->controller::App\\Http\\Controllers\\HealthController",
+                "source": "route::get::/health",
+                "target": "controller::App\\Http\\Controllers\\HealthController",
                 "type": "routes_to",
-                "label": "index",
+                "label": "__invoke",
                 "metadata": {}
             },
             {
-                "id": "edge::uses_middleware::route::get::/api/users->middleware::api",
-                "source": "route::get::/api/users",
-                "target": "middleware::api",
-                "type": "uses_middleware",
+                "id": "edge::extends::controller::App\\Http\\Controllers\\HealthController->controller::App\\Http\\Controllers\\Controller",
+                "source": "controller::App\\Http\\Controllers\\HealthController",
+                "target": "controller::App\\Http\\Controllers\\Controller",
+                "type": "extends",
                 "label": null,
+                "metadata": {}
+            },
+            {
+                "id": "edge::extends::controller::App\\Http\\Controllers\\UserController->controller::App\\Http\\Controllers\\Controller",
+                "source": "controller::App\\Http\\Controllers\\UserController",
+                "target": "controller::App\\Http\\Controllers\\Controller",
+                "type": "extends",
+                "label": null,
+                "metadata": {}
+            },
+            {
+                "id": "edge::implements::controller::App\\Http\\Controllers\\UserController->controller::App\\Contracts\\Auditable",
+                "source": "controller::App\\Http\\Controllers\\UserController",
+                "target": "controller::App\\Contracts\\Auditable",
+                "type": "implements",
+                "label": null,
+                "metadata": {}
+            },
+            {
+                "id": "edge::uses_trait::controller::App\\Http\\Controllers\\UserController->controller::App\\Http\\Traits\\HasApiResponse",
+                "source": "controller::App\\Http\\Controllers\\UserController",
+                "target": "controller::App\\Http\\Traits\\HasApiResponse",
+                "type": "uses_trait",
+                "label": null,
+                "metadata": {}
+            },
+            {
+                "id": "edge::depends_on::controller::App\\Http\\Controllers\\UserController->service::App\\Services\\UserService",
+                "source": "controller::App\\Http\\Controllers\\UserController",
+                "target": "service::App\\Services\\UserService",
+                "type": "depends_on",
+                "label": "userService",
+                "metadata": {}
+            },
+            {
+                "id": "edge::depends_on::controller::App\\Http\\Controllers\\UserController->model::App\\Models\\User",
+                "source": "controller::App\\Http\\Controllers\\UserController",
+                "target": "model::App\\Models\\User",
+                "type": "depends_on",
+                "label": "viewer",
                 "metadata": {}
             }
         ]
     },
     "results": {
         "routes": {
-            "routes": 4,
+            "routes": 3,
+            "files_analyzed": 1,
+            "files_skipped": 0
+        },
+        "middleware": {
+            "middleware": 1,
+            "groups": 0,
+            "aliases": 1,
             "files_analyzed": 2,
+            "files_skipped": 0
+        },
+        "controllers": {
+            "controllers": 3,
+            "methods": 5,
+            "files_analyzed": 3,
             "files_skipped": 0
         }
     },
