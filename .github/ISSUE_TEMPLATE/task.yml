@@ -1,7 +1,6 @@
 name: Task
 description: An implementation task with clear scope and acceptance criteria
 title: "[Task] "
-
 labels: ["type:task"]
 body:
   - type: dropdown
@@ -44,9 +43,9 @@ body:
       label: Acceptance Criteria
       description: How do we know this is done?
       value: |
-        - [ ]
-        - [ ]
-        - [ ]
+        - [ ] 
+        - [ ] 
+        - [ ] 
     validations:
       required: true
   - type: textarea
