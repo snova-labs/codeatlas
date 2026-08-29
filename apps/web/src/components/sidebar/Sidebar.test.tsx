@@ -19,23 +19,27 @@ describe('Sidebar', () => {
     render(<Sidebar />);
 
     expect(screen.getByText('routes')).toBeInTheDocument();
-    expect(screen.getByText('4')).toBeInTheDocument();
+    expect(screen.getByText('controllers')).toBeInTheDocument();
+    expect(screen.getByText('middlewares')).toBeInTheDocument();
+    // 3 routes and 3 controllers
+    expect(screen.getAllByText('3').length).toBeGreaterThanOrEqual(2);
   });
 
-  it('lists every route label', () => {
+  it('lists route and controller labels', () => {
     render(<Sidebar />);
 
     expect(screen.getByText('GET /users')).toBeInTheDocument();
-    expect(screen.getByText('GET /api/users')).toBeInTheDocument();
+    expect(screen.getByText('GET /health')).toBeInTheDocument();
+    expect(screen.getByText('UserController')).toBeInTheDocument();
   });
 
   it('filters nodes by search query', () => {
     render(<Sidebar />);
 
-    fireEvent.change(screen.getByLabelText('Search nodes'), { target: { value: 'api' } });
+    fireEvent.change(screen.getByLabelText('Search nodes'), { target: { value: 'health' } });
 
-    expect(screen.getByText('GET /api/users')).toBeInTheDocument();
-    expect(screen.queryByText('POST /users')).not.toBeInTheDocument();
+    expect(screen.getByText('GET /health')).toBeInTheDocument();
+    expect(screen.queryByText('GET /users')).not.toBeInTheDocument();
   });
 
   it('selects a node on click', () => {

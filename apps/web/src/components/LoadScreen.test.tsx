@@ -21,7 +21,7 @@ describe('LoadScreen', () => {
     });
 
     await waitFor(() => {
-      expect(useAnalysisStore.getState().document?.project.name).toBe('demo/integration-app');
+      expect(useAnalysisStore.getState().document?.project.name).toBe('demo/controllers-app');
     });
   });
 
