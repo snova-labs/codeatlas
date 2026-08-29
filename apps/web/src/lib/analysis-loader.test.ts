@@ -8,8 +8,8 @@ describe('parseAnalysisDocument', () => {
     const doc = parseAnalysisDocument(fixtureRaw);
 
     expect(doc.version).toBe('1.0.0');
-    expect(doc.project.name).toBe('demo/integration-app');
-    expect(doc.graph.nodes).toHaveLength(4);
+    expect(doc.project.name).toBe('demo/controllers-app');
+    expect(doc.graph.nodes).toHaveLength(7);
     expect(doc.graph.edges.length).toBeGreaterThan(0);
   });
 

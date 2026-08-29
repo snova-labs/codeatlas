@@ -83,6 +83,65 @@ export function isRouteMetadata(m: Record<string, unknown>): m is Record<string,
   return typeof m['uri'] === 'string' && Array.isArray(m['methods']);
 }
 
+/** Controller analyzer node metadata (JSON_SCHEMA.md controllers result). */
+export interface ControllerParameter {
+  name: string;
+  type: string | null;
+  nullable: boolean;
+  default: string | null;
+}
+
+export interface ControllerMethod {
+  name: string;
+  visibility: string;
+  parameters: ControllerParameter[];
+  return_type: string | null;
+  attributes: string[];
+  line_start: number;
+  line_end: number;
+}
+
+export interface ControllerDependency {
+  fqcn: string;
+  parameter: string;
+  type: string;
+}
+
+export interface ControllerMetadata {
+  fqcn: string;
+  name: string;
+  namespace: string | null;
+  parent: string | null;
+  interfaces: string[];
+  traits: string[];
+  methods: ControllerMethod[];
+  dependencies: ControllerDependency[];
+  abstract: boolean;
+  invokable: boolean;
+}
+
+export function isControllerMetadata(
+  m: Record<string, unknown>,
+): m is Record<string, unknown> & ControllerMetadata {
+  return typeof m['fqcn'] === 'string' && Array.isArray(m['methods']) && Array.isArray(m['dependencies']);
+}
+
+/** Middleware analyzer node metadata (JSON_SCHEMA.md middleware result). */
+export interface MiddlewareMetadata {
+  alias: string | null;
+  fqcn: string | null;
+  parameters: string[];
+  groups: string[];
+  priority: number | null;
+  global: boolean;
+}
+
+export function isMiddlewareMetadata(
+  m: Record<string, unknown>,
+): m is Record<string, unknown> & MiddlewareMetadata {
+  return 'alias' in m && 'global' in m && Array.isArray(m['groups']);
+}
+
 export interface AnalysisEdge {
   id: string;
   source: string;

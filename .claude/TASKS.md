@@ -97,12 +97,21 @@ Nova's local steps (see RELEASE_RUNBOOK.md):
 **Cumulative runtime assertions: 515 across 8 packages.**
 **All UI ghost nodes are now obsolete — every edge endpoint is real.**
 
-## Active: v0.2.0 "Connections" Release
+## v0.2.0 "Connections" Release
 
-- ⬜ Nova: local suites (Pest/PHPStan/Pint/Testbench) + real-app smoke
-- ⬜ CHANGELOG → [0.2.0]; release notes; tag
-- ⬜ UI polish pass: middleware group + inspector for controller methods/deps
-      (types already carry the data; render is generic-metadata fallback today)
+Claude's deliverables — DONE:
+- ✅ UI: typed controller inspector (hierarchy, deps, visibility-colored method
+      signatures with shortened types + attribute badges) and typed middleware
+      inspector (alias/fqcn/params/groups/priority/global)
+- ✅ UI: middleware_group layout column; fixture regenerated from 3-analyzer
+      backend (7 nodes / 10 edges); all tests updated to it
+- ✅ **Gates green: tsc · ESLint · 32/32 Vitest · vite build**
+- ✅ CHANGELOG → [0.2.0] — 2026-07-12 — "Connections"
+- ✅ Release notes: .github/releases/v0.2.0.md
+
+Nova's local steps (same runbook as v0.1.0):
+- ⬜ make lint && make analyze && make test; Testbench suite
+- ⬜ Real-app smoke (3 analyzers) → merge → tag v0.2.0 → GitHub release
 
 ## Backlog (v0.3.0 — Sprint 6.x)
 

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+_Nothing yet — next up: v0.3.0 (service + repository analyzers)._
+
+## [0.2.0] — 2026-07-12 — "Connections"
+
+### Added — Web UI typed inspector views (v0.2.0 polish)
+
+- **Controller inspector view**: FQCN, hierarchy (extends/implements/traits, short names), constructor dependencies with parameter names, and full method signatures — visibility-colored, with shortened types, defaults, and PHP attribute badges
+- **Middleware inspector view**: alias, FQCN, runtime parameters, group membership, priority, and global flag
+- `middleware_group` nodes placed in their own layout column beside middleware
+- UI fixture regenerated from the three-analyzer backend output (7 nodes, 10 edges); all component tests now run against it
+
 ### Added — Phase 5 Controller Analyzer (Sprint 5.2)
 
 - **ControllerAnalyzer** (`CodeAtlas\Analyzers\Controllers`): extracts controller classes with methods, constructor-injected dependencies, traits, interfaces, and inheritance

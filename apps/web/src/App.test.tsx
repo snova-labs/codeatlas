@@ -25,6 +25,6 @@ describe('App', () => {
     expect(screen.getByLabelText('Node list')).toBeInTheDocument();
     expect(screen.getByTestId('graph-canvas')).toBeInTheDocument();
     expect(screen.getByLabelText('Inspector')).toBeInTheDocument();
-    expect(screen.getByText(/demo\/integration-app/)).toBeInTheDocument();
+    expect(screen.getByText(/demo\/controllers-app/)).toBeInTheDocument();
   });
 });

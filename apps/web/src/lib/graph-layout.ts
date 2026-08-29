@@ -2,7 +2,7 @@ import type { AnalysisEdge, AnalysisNode, NodeType } from '../types/analysis';
 import type { AtlasFlowNode } from '../components/graph/nodes/AtlasNode';
 import type { Edge as FlowEdge } from '@xyflow/react';
 
-const COLUMN_ORDER: NodeType[] = ['route', 'middleware', 'controller', 'service', 'repository', 'model'];
+const COLUMN_ORDER: NodeType[] = ['route', 'middleware_group', 'middleware', 'controller', 'service', 'repository', 'model'];
 const COLUMN_WIDTH = 340;
 const ROW_HEIGHT = 96;
 
