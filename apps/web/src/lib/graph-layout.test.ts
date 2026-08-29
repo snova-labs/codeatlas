@@ -27,14 +27,20 @@ describe('synthesizeNode', () => {
 });
 
 describe('layoutGraph', () => {
-  it('synthesizes placeholder nodes for edge targets without real nodes', () => {
+  it('synthesizes placeholder nodes only for edge targets without real nodes', () => {
     const { flowNodes } = layoutGraph(doc.graph.nodes, doc.graph.edges);
 
-    // 4 real route nodes + synthesized controller + middleware targets
+    // 7 real nodes + synthesized dependency/hierarchy targets (service, model, interface, trait)
     expect(flowNodes.length).toBeGreaterThan(doc.graph.nodes.length);
     const ids = flowNodes.map((n) => n.id);
-    expect(ids).toContain('controller::App\\Http\\Controllers\\UserController');
-    expect(ids).toContain('middleware::auth');
+    expect(ids).toContain('service::App\\Services\\UserService');
+    expect(ids).toContain('model::App\\Models\\User');
+
+    // routes/middleware/controllers are REAL nodes now, not ghosts
+    const userController = flowNodes.find(
+      (n) => n.id === 'controller::App\\Http\\Controllers\\UserController',
+    );
+    expect(userController?.data.analysis.tags).not.toContain('synthesized');
   });
 
   it('keeps every edge renderable (no dangling endpoints)', () => {

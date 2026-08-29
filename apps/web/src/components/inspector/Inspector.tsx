@@ -4,7 +4,8 @@ import { useAnalysisStore } from '../../stores/analysisStore';
 import { useGraphStore } from '../../stores/graphStore';
 import { nodeColor } from '../../lib/node-colors';
 import { synthesizeNode } from '../../lib/graph-layout';
-import { isRouteMetadata } from '../../types/analysis';
+import { isControllerMetadata, isMiddlewareMetadata, isRouteMetadata } from '../../types/analysis';
+import type { ControllerMethod } from '../../types/analysis';
 import type { AnalysisNode } from '../../types/analysis';
 
 function Row({ label, value }: { label: string; value: string }): React.JSX.Element {
@@ -14,6 +15,46 @@ function Row({ label, value }: { label: string; value: string }): React.JSX.Elem
       <span className="truncate text-right font-mono text-atlas-text-primary" title={value}>
         {value}
       </span>
+    </div>
+  );
+}
+
+function methodSignature(method: ControllerMethod): string {
+  const params = method.parameters
+    .map((p) => `${p.type === null ? 'mixed' : shortType(p.type)} $${p.name}${p.default === null ? '' : ` = ${p.default}`}`)
+    .join(', ');
+  const ret = method.return_type === null ? '' : `: ${shortType(method.return_type)}`;
+
+  return `${method.name}(${params})${ret}`;
+}
+
+function shortType(type: string): string {
+  return type
+    .split('|')
+    .map((part) => part.split('\\').pop() ?? part)
+    .join('|');
+}
+
+function MethodRow({ method }: { method: ControllerMethod }): React.JSX.Element {
+  return (
+    <div className="py-1">
+      <div className="flex items-baseline gap-2 text-sm">
+        <span
+          className={`shrink-0 text-xs ${
+            method.visibility === 'public' ? 'text-atlas-success' : 'text-atlas-text-muted'
+          }`}
+        >
+          {method.visibility}
+        </span>
+        <span className="truncate font-mono text-atlas-text-primary" title={methodSignature(method)}>
+          {methodSignature(method)}
+        </span>
+      </div>
+      {method.attributes.length > 0 && (
+        <div className="truncate pl-12 text-xs text-atlas-text-muted">
+          #[{method.attributes.map((a) => a.split('\\').pop()).join(', ')}]
+        </div>
+      )}
     </div>
   );
 }
@@ -108,6 +149,52 @@ export function Inspector(): React.JSX.Element {
                   .join(', ')}
               />
             )}
+          </>
+        ) : isControllerMetadata(meta) ? (
+          <>
+            <Row label="FQCN" value={meta.fqcn} />
+            {meta.parent !== null && <Row label="Extends" value={shortType(meta.parent)} />}
+            {meta.interfaces.length > 0 && (
+              <Row label="Implements" value={meta.interfaces.map(shortType).join(', ')} />
+            )}
+            {meta.traits.length > 0 && (
+              <Row label="Traits" value={meta.traits.map(shortType).join(', ')} />
+            )}
+            {meta.invokable && <Row label="Kind" value="Invokable" />}
+            {meta.abstract && <Row label="Kind" value="Abstract" />}
+
+            {meta.dependencies.length > 0 && (
+              <div className="mt-2">
+                <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-atlas-text-muted">
+                  Dependencies
+                </h4>
+                {meta.dependencies.map((dep) => (
+                  <Row key={dep.parameter} label={`$${dep.parameter}`} value={shortType(dep.fqcn)} />
+                ))}
+              </div>
+            )}
+
+            {meta.methods.length > 0 && (
+              <div className="mt-2">
+                <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-atlas-text-muted">
+                  Methods
+                </h4>
+                {meta.methods.map((method) => (
+                  <MethodRow key={method.name} method={method} />
+                ))}
+              </div>
+            )}
+          </>
+        ) : isMiddlewareMetadata(meta) ? (
+          <>
+            {meta.alias !== null && <Row label="Alias" value={meta.alias} />}
+            {meta.fqcn !== null && <Row label="FQCN" value={meta.fqcn} />}
+            {meta.parameters.length > 0 && (
+              <Row label="Parameters" value={meta.parameters.map((p) => `$${p}`).join(', ')} />
+            )}
+            {meta.groups.length > 0 && <Row label="Groups" value={meta.groups.join(', ')} />}
+            {meta.priority !== null && <Row label="Priority" value={String(meta.priority)} />}
+            <Row label="Global" value={meta.global ? 'yes' : 'no'} />
           </>
         ) : (
           Object.entries(meta)

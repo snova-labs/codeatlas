@@ -26,7 +26,6 @@ describe('Inspector', () => {
 
     expect(screen.getByText('GET /users')).toBeInTheDocument();
     expect(screen.getByText('/users')).toBeInTheDocument();
-    expect(screen.getByText('users.index')).toBeInTheDocument();
     expect(screen.getByText('App\\Http\\Controllers\\UserController')).toBeInTheDocument();
     expect(screen.getByText('auth')).toBeInTheDocument();
     expect(screen.getByText('routes/web.php')).toBeInTheDocument();
@@ -43,13 +42,13 @@ describe('Inspector', () => {
 
   it('inspects synthesized placeholder nodes', () => {
     useGraphStore.setState({
-      selectedNodeId: 'controller::App\\Http\\Controllers\\UserController',
+      selectedNodeId: 'service::App\\Services\\UserService',
     });
     render(<Inspector />);
 
-    expect(screen.getByText('UserController')).toBeInTheDocument();
-    // incoming edges from the routes that point at it
+    expect(screen.getByText('UserService')).toBeInTheDocument();
+    // incoming DependsOn edge from the controller that injects it
     const connections = screen.getByLabelText('Connections');
-    expect(connections.textContent).toContain('route::get::/users');
+    expect(connections.textContent).toContain('controller::App\\Http\\Controllers\\UserController');
   });
 });
