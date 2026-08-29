@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http;
+
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\TrimStrings;
+use App\Http\Middleware\TrustProxies;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
+
+class Kernel extends HttpKernel
+{
+    protected $middleware = [
+        TrustProxies::class,
+        TrimStrings::class,
+    ];
+
+    protected $middlewareGroups = [
+        'web' => [
+            EncryptCookies::class,
+            'throttle:web',
+        ],
+        'api' => [
+            'throttle:api',
+        ],
+    ];
+
+    protected $middlewareAliases = [
+        'auth' => Authenticate::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+    ];
+
+    protected $middlewarePriority = [
+        Authenticate::class,
+    ];
+}

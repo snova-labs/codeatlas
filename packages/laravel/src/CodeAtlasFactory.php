@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CodeAtlas\Laravel;
 
+use CodeAtlas\Analyzers\Middleware\MiddlewareAnalyzer;
+use CodeAtlas\Analyzers\Middleware\MiddlewareAnalyzerPlugin;
 use CodeAtlas\Analyzers\Routes\RouteAnalyzer;
 use CodeAtlas\Analyzers\Routes\RouteAnalyzerPlugin;
 use CodeAtlas\Contracts\ContainerInterface;
@@ -60,9 +62,11 @@ final class CodeAtlasFactory
         $loader = new PluginLoader($container);
         $loader->registerMany([
             RouteAnalyzerPlugin::class,
+            MiddlewareAnalyzerPlugin::class,
             JsonExporterPlugin::class,
         ]);
         $loader->tagAnalyzer(RouteAnalyzer::class);
+        $loader->tagAnalyzer(MiddlewareAnalyzer::class);
         $loader->tagExporter(JsonExporter::class);
 
         $events = new EventBus();

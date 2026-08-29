@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-_Nothing yet — next up: v0.2.0 "Connections" (middleware + controller analyzers)._
+### Added — Phase 5 Middleware Analyzer (Sprint 5.1)
+
+- **MiddlewareAnalyzer** (`CodeAtlas\Analyzers\Middleware`): extracts middleware classes, aliases, groups, priority, and global registration
+- **Both registration styles**: Laravel 11 `bootstrap/app.php` `withMiddleware()` closures (alias/append/prepend/appendToGroup/web/api/priority) and Laravel ≤10 `Kernel.php` properties (including legacy `$routeMiddleware`)
+- **ClassExtractor**: middleware FQCN + the `handle()` parameters after `$next` (the runtime parameters behind `auth:sanctum` usage)
+- **middleware_group nodes** with `UsesMiddleware` edges to each member
+- Identity rules matching the node-ID convention: alias when present, class basename otherwise — route and middleware graphs join with zero dangling endpoints
+- **MiddlewareAnalyzerPlugin** registered in `CodeAtlasFactory`; `codeatlas:analyze` now runs both analyzers
+
+### Fixed
+
+- **analyzer-routes**: `UsesMiddleware` edge targets now strip runtime parameters (`auth:sanctum` → `middleware::auth`) per the JSON_SCHEMA node-ID convention; the full string remains in route metadata
+- **analyzer-routes / analyzer-middleware**: absolute class references (`\Fully\Qualified::class`) no longer have the file's namespace wrongly prepended during FQCN resolution
 
 ## [0.1.0] — 2026-07-11 — "First Light"
 

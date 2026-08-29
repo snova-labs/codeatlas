@@ -99,6 +99,13 @@ final class ValueResolver
             return null;
         }
 
+        // \Absolute\Refs parse as FullyQualified — already resolved; running
+        // them through use-statement resolution would wrongly prepend the
+        // file's namespace.
+        if ($expr->class->isFullyQualified()) {
+            return ltrim($expr->class->toString(), '\\');
+        }
+
         return $this->file->resolveClassName($expr->class->toString());
     }
 

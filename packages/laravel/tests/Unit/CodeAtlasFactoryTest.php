@@ -15,7 +15,7 @@ describe('CodeAtlasFactory', function (): void {
 
         expect($container->has(ParserInterface::class))->toBeTrue();
         expect($container->has(ScannerInterface::class))->toBeTrue();
-        expect($container->tagged(PluginLoader::TAG_ANALYZER))->toHaveCount(1);
+        expect($container->tagged(PluginLoader::TAG_ANALYZER))->toHaveCount(2);
         expect($container->tagged(PluginLoader::TAG_EXPORTER))->toHaveCount(1);
     });
 

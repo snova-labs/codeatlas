@@ -54,8 +54,37 @@ Nova's local steps (see RELEASE_RUNBOOK.md):
 - ⬜ Merge order per runbook → tag v0.1.0 → GitHub release
 - ⬜ Packagist submission (runbook §5 covers the monorepo/splitsh decision)
 
-## Backlog (v0.2.0 — Sprint 5.1)
+## Completed (v0.2.0 in progress)
 
-- Middleware analyzer (per ROADMAP Phase 5)
-- Controller analyzer
-- UI: replace synthesized controller ghosts with real controller nodes
+### Sprint 5.1 — Middleware Analyzer ✅
+- ✅ ClassExtractor (FQCN + post-$next handle() params)
+- ✅ BootstrapRegistrationExtractor (Laravel 11 withMiddleware closure:
+      alias / append / prepend / appendToGroup / web / api shorthands / priority)
+- ✅ KernelRegistrationExtractor (Laravel ≤10 Kernel properties incl. legacy $routeMiddleware)
+- ✅ MiddlewareAnalyzer merging registration + class discovery; middleware_group nodes
+      with member edges; identity = alias, else class basename
+- ✅ MiddlewareAnalyzerPlugin registered in CodeAtlasFactory
+- ✅ Route analyzer FIX: UsesMiddleware edge targets strip runtime params
+      ('auth:sanctum' → middleware::auth) per JSON_SCHEMA ID convention
+- ✅ FQCN resolution FIX in all three fqcn helpers (incl. routes ValueResolver):
+      \Absolute\Refs (FullyQualified) no longer get the file namespace prepended
+- ✅ Fixtures: full L11 app (bootstrap + 4 middleware classes + routes) and Kernel-style file
+- ✅ **Runtime verification: 38/38** (extractors, analyzer, fault isolation)
+- ✅ **Pipeline join verification: 9/9** — routes + middleware in ONE merged graph
+      with ZERO dangling endpoints; JSON document carries both result blocks
+- Pest tests: extractors unit suite + full-pipeline integration suite
+
+**Cumulative runtime assertions: 455 across 7 packages.**
+
+## Active: Sprint 5.2 — Controller Analyzer
+
+- Parse controller classes: methods, visibility, parameters, return types, attributes
+- Constructor-injection dependency extraction
+- Traits, parent, interfaces
+- Controller nodes + controller_method nodes; replaces the UI's controller ghosts
+- Route → Controller edges then resolve to real nodes (same join exercise as middleware)
+
+## Backlog
+
+- v0.2.0 release after controller analyzer (ROADMAP "Connections")
+- UI: middleware group visualization, global-middleware badge
