@@ -44,11 +44,11 @@ final readonly class ControllerData
             'interfaces' => $this->interfaces,
             'traits' => $this->traits,
             'methods' => array_map(
-                static fn (MethodData $m): array => $m->toArray(),
+                static fn(MethodData $m): array => $m->toArray(),
                 $this->methods,
             ),
             'dependencies' => array_map(
-                static fn (DependencyData $d): array => $d->toArray(),
+                static fn(DependencyData $d): array => $d->toArray(),
                 $this->dependencies,
             ),
             'abstract' => $this->abstract,

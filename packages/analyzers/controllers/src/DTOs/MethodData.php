@@ -32,7 +32,7 @@ final readonly class MethodData
             'name' => $this->name,
             'visibility' => $this->visibility,
             'parameters' => array_map(
-                static fn (ParameterData $p): array => $p->toArray(),
+                static fn(ParameterData $p): array => $p->toArray(),
                 $this->parameters,
             ),
             'return_type' => $this->returnType,

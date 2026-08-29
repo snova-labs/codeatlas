@@ -21,7 +21,7 @@ describe('ControllerAnalyzer — full pipeline', function (): void {
         expect($result->errors)->toBe([]);
         expect($result->metadata['controllers'])->toBe(3);
 
-        $ids = array_map(fn ($n): string => $n->id(), $result->nodes);
+        $ids = array_map(fn($n): string => $n->id(), $result->nodes);
         expect($ids)->toContain('controller::App\\Http\\Controllers\\UserController');
     });
 
@@ -48,9 +48,9 @@ describe('ControllerAnalyzer — full pipeline', function (): void {
         $middleware = (new MiddlewareAnalyzer(new PhpParser()))->analyze($context);
 
         $allIds = array_merge(
-            array_map(fn ($n): string => $n->id(), $controllers->nodes),
-            array_map(fn ($n): string => $n->id(), $routes->nodes),
-            array_map(fn ($n): string => $n->id(), $middleware->nodes),
+            array_map(fn($n): string => $n->id(), $controllers->nodes),
+            array_map(fn($n): string => $n->id(), $routes->nodes),
+            array_map(fn($n): string => $n->id(), $middleware->nodes),
         );
 
         foreach ($routes->edges as $edge) {

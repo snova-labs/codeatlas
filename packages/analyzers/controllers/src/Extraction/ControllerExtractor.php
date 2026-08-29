@@ -211,7 +211,7 @@ final class ControllerExtractor
             $glue = $type instanceof UnionType ? '|' : '&';
 
             return implode($glue, array_map(
-                fn (Node $inner): string => $this->typeToString($inner),
+                fn(Node $inner): string => $this->typeToString($inner),
                 $type->types,
             ));
         }
