@@ -153,7 +153,11 @@ final class RouteAnalyzer implements AnalyzerInterface
         }
 
         foreach ($route->middleware as $middleware) {
-            $middlewareNodeId = NodeType::Middleware->id($middleware);
+            // Node IDs identify the middleware itself; runtime parameters
+            // ("auth:sanctum") are not part of identity per JSON_SCHEMA.md
+            // ("middleware::auth"). The full string stays in route metadata.
+            $alias = explode(':', $middleware, 2)[0];
+            $middlewareNodeId = NodeType::Middleware->id($alias);
             $edges[] = Edge::make(
                 source: $routeNodeId,
                 target: $middlewareNodeId,
