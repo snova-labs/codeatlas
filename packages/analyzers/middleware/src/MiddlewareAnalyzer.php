@@ -22,6 +22,7 @@ use CodeAtlas\Contracts\ValueObjects\AnalysisError;
 use CodeAtlas\Contracts\ValueObjects\AnalysisResult;
 use CodeAtlas\Contracts\ValueObjects\FileReference;
 use CodeAtlas\Contracts\ValueObjects\ProjectContext;
+use CodeAtlas\Core\Parser\ParsedFile;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -71,6 +72,7 @@ final class MiddlewareAnalyzer implements AnalyzerInterface
         foreach ($this->registrationFiles($context) as $file) {
             try {
                 $parsed = $this->parser->parse($file->absolutePath);
+                assert($parsed instanceof ParsedFile);
                 $filesAnalyzed++;
             } catch (ParserException $e) {
                 $filesSkipped++;
@@ -94,6 +96,7 @@ final class MiddlewareAnalyzer implements AnalyzerInterface
         foreach ($context->filesOfType(FileType::Middleware) as $file) {
             try {
                 $parsed = $this->parser->parse($file->absolutePath);
+                assert($parsed instanceof ParsedFile);
                 $filesAnalyzed++;
             } catch (ParserException $e) {
                 $filesSkipped++;

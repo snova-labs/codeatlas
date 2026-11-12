@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CodeAtlas\Analyzers\Middleware\Extraction;
 
-use CodeAtlas\Contracts\ParsedFileInterface;
+use CodeAtlas\Core\Parser\ParsedFile;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 
@@ -14,13 +14,17 @@ use PhpParser\Node\Stmt\ClassMethod;
  * The interesting parts: the FQCN, and the parameters of handle() that
  * come AFTER $next — those are the runtime middleware parameters
  * ("auth:sanctum" → handle($request, $next, string $guard)).
+ *
+ * Typed against the concrete ParsedFile (rather than ParsedFileInterface)
+ * because we need its AST helpers, which the interface intentionally omits
+ * to keep the contracts package free of a PhpParser\Node import.
  */
 final class ClassExtractor
 {
     /**
      * @return array{fqcn: string, parameters: list<string>, line: int}|null
      */
-    public function extract(ParsedFileInterface $file): ?array
+    public function extract(ParsedFile $file): ?array
     {
         $classes = $file->findNodes(Class_::class);
 

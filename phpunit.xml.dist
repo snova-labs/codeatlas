@@ -23,6 +23,12 @@
         <testsuite name="analyzer-routes">
             <directory>packages/analyzers/routes/tests</directory>
         </testsuite>
+        <testsuite name="analyzer-middleware">
+            <directory>packages/analyzers/middleware/tests</directory>
+        </testsuite>
+        <testsuite name="analyzer-controllers">
+            <directory>packages/analyzers/controllers/tests</directory>
+        </testsuite>
         <testsuite name="exporter-json">
             <directory>packages/exporters/json/tests</directory>
         </testsuite>
@@ -34,6 +40,8 @@
             <directory>packages/scanner/src</directory>
             <directory>packages/laravel/src</directory>
             <directory>packages/analyzers/routes/src</directory>
+            <directory>packages/analyzers/middleware/src</directory>
+            <directory>packages/analyzers/controllers/src</directory>
             <directory>packages/exporters/json/src</directory>
         </include>
     </source>
