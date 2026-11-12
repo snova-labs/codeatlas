@@ -319,7 +319,7 @@ final class ServiceAnalyzer implements AnalyzerInterface
      */
     private function callEdges(ServiceData $service, string $sourceId): array
     {
-        /** @var array<string, array{type: NodeType, methods: list<string>, lines: list<int>}> $targets */
+        /** @var array<string, array{fqcn: string, type: NodeType, methods: list<string>, lines: list<int>}> $targets */
         $targets = [];
 
         foreach ($service->calls as $sites) {
@@ -330,21 +330,22 @@ final class ServiceAnalyzer implements AnalyzerInterface
                     continue;
                 }
 
-                $targets[$site->targetFqcn] ??= ['type' => $type, 'methods' => [], 'lines' => []];
+                $key = $site->targetFqcn;
+                $targets[$key] ??= ['fqcn' => $key, 'type' => $type, 'methods' => [], 'lines' => []];
 
-                if (!in_array($site->method, $targets[$site->targetFqcn]['methods'], true)) {
-                    $targets[$site->targetFqcn]['methods'][] = $site->method;
-                    $targets[$site->targetFqcn]['lines'][] = $site->line;
+                if (!in_array($site->method, $targets[$key]['methods'], true)) {
+                    $targets[$key]['methods'][] = $site->method;
+                    $targets[$key]['lines'][] = $site->line;
                 }
             }
         }
 
         $edges = [];
 
-        foreach ($targets as $fqcn => $target) {
+        foreach ($targets as $target) {
             $edges[] = Edge::make(
                 source: $sourceId,
-                target: $target['type']->id($fqcn),
+                target: $target['type']->id($target['fqcn']),
                 type: EdgeType::Calls,
                 label: $this->callLabel($target['methods']),
                 metadata: ['methods' => $target['methods'], 'lines' => $target['lines']],

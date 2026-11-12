@@ -89,7 +89,7 @@ final class ClassShapeExtractor
             name: $name,
             namespace: $namespace,
             parent: $class->extends instanceof Name ? $this->types->resolve($class->extends) : null,
-            interfaces: array_map($this->types->resolve(...), $class->implements),
+            interfaces: array_values(array_map($this->types->resolve(...), $class->implements)),
             traits: $this->traits($class),
             methods: $this->methods($class),
             dependencies: $this->dependencies($class),
@@ -154,7 +154,7 @@ final class ClassShapeExtractor
     }
 
     /**
-     * @param array<int, Param> $params
+     * @param array<Param> $params
      *
      * @return list<ParameterShape>
      */

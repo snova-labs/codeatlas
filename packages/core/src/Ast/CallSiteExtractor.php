@@ -197,9 +197,13 @@ final class CallSiteExtractor
         $nodes = $this->finder->find($method->stmts, static fn(Node $node): bool => $node instanceof MethodCall || $node instanceof StaticCall);
 
         foreach ($nodes as $node) {
-            $call = $node instanceof MethodCall
-                ? $this->instanceCall($node, $properties)
-                : $this->staticCall($node);
+            if ($node instanceof MethodCall) {
+                $call = $this->instanceCall($node, $properties);
+            } elseif ($node instanceof StaticCall) {
+                $call = $this->staticCall($node);
+            } else {
+                continue;
+            }
 
             if ($call !== null) {
                 $calls[] = $call;
