@@ -7,6 +7,8 @@ export type NodeType =
   | 'route'
   | 'controller'
   | 'controller_method'
+  | 'interface'
+  | 'trait'
   | 'middleware'
   | 'middleware_group'
   | 'service'

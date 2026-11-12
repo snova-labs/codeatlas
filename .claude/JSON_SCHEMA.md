@@ -74,6 +74,17 @@ Examples:
 - `middleware::auth`
 - `policy::App\\Policies\\UserPolicy`
 - `migration::2024_01_01_create_users_table`
+- `interface::App\\Contracts\\Auditable`
+- `trait::App\\Concerns\\LogsActivity`
+
+**Referenced-only nodes.** An analyzer emits `interface::` and `trait::`
+nodes for the types a class it analyzed implements or uses, even though
+the declaring file is usually outside its scan scope (vendor interfaces,
+`app/Concerns` traits). These nodes carry `fqcn` and
+`"referenced_only": true` in metadata, a `referenced` tag, and a null
+`file`. Because node IDs are deterministic and the graph is ID-keyed,
+several analyzers emitting the same interface or trait collapse into one
+node without coordinating.
 
 ### Node Types (enum)
 
@@ -81,6 +92,8 @@ Examples:
 route
 controller
 controller_method
+interface
+trait
 middleware
 middleware_group
 service

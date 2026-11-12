@@ -41,6 +41,54 @@ describe('ControllerAnalyzer — full pipeline', function (): void {
         expect($byType['depends_on'][1]->target())->toBe('model::App\\Models\\User');
     });
 
+    it('targets interface:: and trait:: nodes for hierarchy edges, not controller::', function (): void {
+        $result = (new ControllerAnalyzer(new PhpParser()))->analyze(Scanner::default()->scan(fullApp()));
+
+        $byType = [];
+        foreach ($result->edges as $e) {
+            $byType[$e->type()->value][] = $e;
+        }
+
+        expect($byType['implements'][0]->target())->toStartWith('interface::');
+        expect($byType['uses_trait'][0]->target())->toStartWith('trait::');
+    });
+
+    it('emits real nodes for every referenced interface and trait', function (): void {
+        $result = (new ControllerAnalyzer(new PhpParser()))->analyze(Scanner::default()->scan(fullApp()));
+
+        $ids = array_map(fn($n): string => $n->id(), $result->nodes);
+
+        foreach ($result->edges as $edge) {
+            if ($edge->type() === EdgeType::Implements || $edge->type() === EdgeType::UsesTrait) {
+                expect($ids)->toContain($edge->target());
+            }
+        }
+    });
+
+    it('tags referenced-only nodes and leaves their file reference null', function (): void {
+        $result = (new ControllerAnalyzer(new PhpParser()))->analyze(Scanner::default()->scan(fullApp()));
+
+        $referenced = array_values(array_filter(
+            $result->nodes,
+            fn($n): bool => str_starts_with($n->id(), 'trait::'),
+        ));
+
+        expect($referenced)->not->toBeEmpty();
+        expect($referenced[0]->toArray()['metadata']['referenced_only'])->toBeTrue();
+        expect($referenced[0]->toArray()['file'])->toBeNull();
+    });
+
+    it('counts controllers, not every node it emits', function (): void {
+        $result = (new ControllerAnalyzer(new PhpParser()))->analyze(Scanner::default()->scan(fullApp()));
+
+        $controllerNodes = array_filter(
+            $result->nodes,
+            fn($n): bool => str_starts_with($n->id(), 'controller::'),
+        );
+
+        expect($result->metadata['controllers'])->toBe(count($controllerNodes));
+    });
+
     it('joins all three analyzers: every RoutesTo edge resolves to a real controller', function (): void {
         $context = Scanner::default()->scan(fullApp());
         $controllers = (new ControllerAnalyzer(new PhpParser()))->analyze($context);
