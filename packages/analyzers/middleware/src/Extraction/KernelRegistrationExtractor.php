@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CodeAtlas\Analyzers\Middleware\Extraction;
 
 use CodeAtlas\Analyzers\Middleware\DTOs\RegistrationData;
-use CodeAtlas\Contracts\ParsedFileInterface;
+use CodeAtlas\Core\Parser\ParsedFile;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
@@ -27,10 +27,14 @@ use PhpParser\Node\Stmt\Property;
  *
  * Property default values are read straight off the AST — the kernel is
  * never instantiated (constitution: no code execution).
+ *
+ * Typed against the concrete ParsedFile (rather than ParsedFileInterface)
+ * because we need its AST helpers, which the interface intentionally omits
+ * to keep the contracts package free of a PhpParser\Node import.
  */
 final class KernelRegistrationExtractor
 {
-    public function __construct(private readonly ParsedFileInterface $file) {}
+    public function __construct(private readonly ParsedFile $file) {}
 
     public function extract(): RegistrationData
     {

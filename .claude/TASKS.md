@@ -113,8 +113,106 @@ Nova's local steps (same runbook as v0.1.0):
 - ⬜ make lint && make analyze && make test; Testbench suite
 - ⬜ Real-app smoke (3 analyzers) → merge → tag v0.2.0 → GitHub release
 
-## Backlog (v0.3.0 — Sprint 6.x)
+## Active: v0.3.0 "Depth" — Sprint 6.x
 
-- Service analyzer (App\Services): the DependsOn edges' targets become real
-- Repository analyzer
-- UI: dependency chain highlighting (route → controller → service)
+**Scope:** Service Analyzer + Repository Analyzer (ROADMAP Phase 6).
+Backlog tickets: TICKETS_BACKLOG.csv rows 137-144.
+
+### Architectural decisions (settled before Sprint 6.1)
+
+**D1 — Shared AST extraction lives in `codeatlas/core`.**
+Services and repositories need the same class-shape logic `ControllerExtractor`
+already has: identity, hierarchy, traits, typed methods, constructor
+dependencies, type rendering. Thirteen more analyzers are on the roadmap
+(models, events, listeners, jobs, notifications, policies, schedule, cache,
+dependencies) and every one needs it, so it is promoted into core rather than
+copied a third and fourth time. Rule 2 forbids analyzer -> analyzer imports,
+not analyzer -> core; core is already a dependency of every analyzer. This is
+also the surface a third-party plugin author needs, since an external analyzer
+cannot import `codeatlas/analyzer-controllers`. Analyzer-specific semantics
+(node typing, edge conventions, domain fields) stay in each package.
+
+**D2 — `NodeType::Interface` and `NodeType::Trait` are first-class.**
+`ControllerAnalyzer` currently types its Implements/UsesTrait edge targets
+`controller::{fqcn}` even when the target is an interface or a trait, so those
+endpoints render as mistyped synthesized ghosts. In Laravel these carry real
+architectural meaning -- `ShouldQueue` decides whether a job queues,
+`ShouldBroadcast` whether an event broadcasts, `SoftDeletes` changes query
+behavior -- and "who implements ShouldQueue?" is load-bearing for the v0.5.0
+jobs/events/notifications analyzers. Each analyzer emits the interface/trait
+nodes it encounters; `Graph::addNode` is ID-keyed and first-write-wins, so no
+cross-analyzer coordination is needed.
+
+### Sprint 6.0 — Close the v0.2.0 infrastructure gaps
+
+Shipped v0.2.0 left three registration gaps that the new packages must not
+inherit:
+
+- ⬜ `phpstan.neon.dist`: add `packages/analyzers/middleware/src` and
+      `packages/analyzers/controllers/src` (currently unanalyzed -- a live
+      violation of non-negotiable rule 8)
+- ⬜ `phpunit.xml.dist`: add `analyzer-middleware` + `analyzer-controllers`
+      testsuites and `<source>` includes
+- ⬜ `.github/workflows/split.yml`: add both to the subtree-split matrix
+- ⬜ Fix the level-max errors this surfaces. Known: `ControllerExtractor` and
+      all three middleware extractors are typed against `ParsedFileInterface`
+      but call `findNodes()`, which only the concrete
+      `CodeAtlas\Core\Parser\ParsedFile` declares. The routes analyzer
+      sidesteps this by typing against the concrete class. Settle it at the
+      contract level so analyzers can keep depending on the interface.
+- ⬜ Root `composer.json`: `analyzer-controllers` / `analyzer-middleware` sit in
+      `require` rather than `require-dev` with the other seven packages, and
+      `analyzer-controllers` is missing from `require-dev`
+
+### Sprint 6.1 — Service Analyzer (`codeatlas/analyzer-services`)
+
+- ⬜ Core class-shape extraction surface per D1, with `ControllerExtractor`
+      retrofitted onto it
+- ⬜ Detection: `FileType::Service` files, plus `bind` / `singleton` / `scoped`
+      calls parsed from `FileType::Provider` files -- this fills the schema's
+      `interface` field and catches services registered outside `app/Services/`
+- ⬜ `service::{fqcn}` nodes with metadata matching JSON_SCHEMA.md's Services
+      Result exactly
+- ⬜ `DependsOn` edges by the namespace convention the controller analyzer
+      already uses; `Extends` / `Implements` / `UsesTrait` per D2
+- ⬜ **`CallSiteExtractor`** -- the new capability. Maps constructor-injected
+      properties (promoted params and `$this->x = $x` assignments) to FQCNs,
+      then walks each method for `$this->prop->method()` call sites and
+      resolves the target. Produces `methods[].calls` and the first
+      `EdgeType::Calls` edges any analyzer has emitted.
+- ⬜ Fixture app with a nested service -> service -> repository chain
+- ⬜ Unit matrix + integration join suite
+
+### Sprint 6.2 — Repository Analyzer (`codeatlas/analyzer-repositories`)
+
+- ⬜ **Add `### Repositories Result` to JSON_SCHEMA.md** -- it does not exist
+      yet, and rule 4 requires analyzers conform to the schema, so this comes
+      first: id, fqcn, name, interface, model, query_methods, dependencies, file
+- ⬜ Detection: `FileType::Repository` + provider bindings
+- ⬜ Model inference **with recorded provenance**, in priority order:
+      constructor dependency on `App\Models\*` > `protected $model = X::class`
+      > static query calls (`User::where(...)`) > method return/param types.
+      Storing which signal matched keeps the output honest instead of guessing
+      silently.
+- ⬜ `query_methods` extraction
+- ⬜ `DependsOn` + `Calls` edges to `model::{fqcn}`; hierarchy edges per D2
+- ⬜ Unit + integration suites
+
+### Sprint 6.3 — UI + v0.3.0 release
+
+- ⬜ Typed service inspector view (interface, dependencies, methods with call
+      lists) following the v0.2.0 controller/middleware inspector pattern
+- ⬜ Typed repository inspector view (model + inference provenance, query
+      methods)
+- ⬜ Interface/trait node colors and layout placement per D2
+- ⬜ **Dependency chain highlighting**: select a node, highlight the transitive
+      route -> controller -> service -> repository -> model path
+- ⬜ Regenerate the UI fixture from the five-analyzer backend; update all suites
+- ⬜ CHANGELOG -> `[0.3.0] — "Depth"`; release notes in
+      `.github/releases/v0.3.0.md`
+
+### Deliverable
+
+A Laravel project's full request path is visible in one graph: route ->
+middleware -> controller -> service -> repository -> model, with constructor
+dependencies and method call sites as distinct edge types.

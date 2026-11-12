@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace CodeAtlas\Analyzers\Controllers\DTOs;
+namespace CodeAtlas\Core\Ast;
 
 /**
- * A controller method per the controllers result schema.
+ * One method of a class-like declaration, as written in source.
  */
-final readonly class MethodData
+final readonly class MethodShape
 {
     /**
-     * @param list<ParameterData> $parameters
-     * @param list<string> $attributes Attribute FQCNs
+     * @param list<ParameterShape> $parameters
+     * @param list<string> $attributes Fully qualified PHP attribute names
      */
     public function __construct(
         public string $name,
@@ -21,6 +21,8 @@ final readonly class MethodData
         public array $attributes,
         public int $lineStart,
         public int $lineEnd,
+        public bool $static = false,
+        public bool $abstract = false,
     ) {}
 
     /**
@@ -32,7 +34,7 @@ final readonly class MethodData
             'name' => $this->name,
             'visibility' => $this->visibility,
             'parameters' => array_map(
-                static fn(ParameterData $p): array => $p->toArray(),
+                static fn(ParameterShape $p): array => $p->toArray(),
                 $this->parameters,
             ),
             'return_type' => $this->returnType,

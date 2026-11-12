@@ -1,0 +1,54 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Services;
+
+use App\Models\User;
+use App\Repositories\UserRepository;
+
+final class OrderService
+{
+    private AuditLog $audit;
+
+    public function __construct(
+        private readonly UserRepository $users,
+        EmailService $mailer,
+        $untyped = null,
+        private readonly string $region = 'eu',
+    ) {
+        $this->mailer = $mailer;
+        $this->unknown = $untyped;
+    }
+
+    public function place(array $data): User
+    {
+        $user = $this->users->create($data);
+        $this->users->touch($user);
+        $this->mailer->sendReceipt($user);
+        $this->audit->record('placed');
+
+        return $user;
+    }
+
+    public function lookup(int $id): ?User
+    {
+        return User::query()->find($id);
+    }
+
+    public function dynamic(string $method): void
+    {
+        $this->users->flush();
+        $this->users->{$method}();
+        $this->missing->doThing();
+        self::helper();
+    }
+
+    public function quiet(): void
+    {
+    }
+
+    private static function helper(): void
+    {
+    }
+}

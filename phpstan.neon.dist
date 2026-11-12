@@ -7,6 +7,8 @@ parameters:
         - packages/scanner/src
         - packages/laravel/src
         - packages/analyzers/routes/src
+        - packages/analyzers/middleware/src
+        - packages/analyzers/controllers/src
         - packages/exporters/json/src
 
     tmpDir: .phpstan

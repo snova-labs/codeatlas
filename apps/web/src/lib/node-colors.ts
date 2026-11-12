@@ -7,6 +7,8 @@ export const NODE_COLORS: Record<NodeType, string> = {
   route: '#3b82f6',
   controller: '#8b5cf6',
   controller_method: '#8b5cf6',
+  interface: '#94a3b8',
+  trait: '#a8a29e',
   middleware: '#f59e0b',
   middleware_group: '#f59e0b',
   service: '#22c55e',

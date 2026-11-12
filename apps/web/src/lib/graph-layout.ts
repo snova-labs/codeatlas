@@ -2,12 +2,15 @@ import type { AnalysisEdge, AnalysisNode, NodeType } from '../types/analysis';
 import type { AtlasFlowNode } from '../components/graph/nodes/AtlasNode';
 import type { Edge as FlowEdge } from '@xyflow/react';
 
-const COLUMN_ORDER: NodeType[] = ['route', 'middleware_group', 'middleware', 'controller', 'service', 'repository', 'model'];
+const COLUMN_ORDER: NodeType[] = [
+  'route', 'middleware_group', 'middleware', 'controller', 'service', 'repository', 'model',
+  'interface', 'trait',
+];
 const COLUMN_WIDTH = 340;
 const ROW_HEIGHT = 96;
 
 const KNOWN_TYPES = new Set<string>([
-  'route', 'controller', 'controller_method', 'middleware', 'middleware_group',
+  'route', 'controller', 'controller_method', 'interface', 'trait', 'middleware', 'middleware_group',
   'service', 'repository', 'model', 'model_relationship', 'event', 'listener',
   'job', 'notification', 'policy', 'policy_method', 'command', 'schedule_entry',
   'migration', 'factory', 'seeder', 'provider', 'config', 'view',

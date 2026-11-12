@@ -98,6 +98,16 @@ Migration:      #78716c  (stone)
 Config:         #6b7280  (gray)
 ```
 
+Structural types are deliberately desaturated. Interfaces and traits are
+scaffolding rather than domain entities, so they recede and let the eye
+follow the request path (route -> controller -> service -> model) while
+still showing what each class is built from:
+
+```
+Interface:      #94a3b8  (slate, muted)
+Trait:          #a8a29e  (stone, muted)
+```
+
 ## Typography
 
 ```

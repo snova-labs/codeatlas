@@ -20,6 +20,8 @@ jobs:
           - { path: packages/core, repo: codeatlas-core }
           - { path: packages/scanner, repo: codeatlas-scanner }
           - { path: packages/analyzers/routes, repo: codeatlas-analyzer-routes }
+          - { path: packages/analyzers/middleware, repo: codeatlas-analyzer-middleware }
+          - { path: packages/analyzers/controllers, repo: codeatlas-analyzer-controllers }
           - { path: packages/exporters/json, repo: codeatlas-exporter-json }
           - { path: packages/laravel, repo: codeatlas-laravel }
     steps:

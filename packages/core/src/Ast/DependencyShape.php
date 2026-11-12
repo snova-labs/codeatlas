@@ -2,16 +2,20 @@
 
 declare(strict_types=1);
 
-namespace CodeAtlas\Analyzers\Controllers\DTOs;
+namespace CodeAtlas\Core\Ast;
 
 /**
- * A constructor-injected dependency per the controllers result schema.
+ * A constructor-injected dependency: a class-typed constructor parameter.
+ *
+ * Builtin-typed parameters (string, int, array, …) are not dependencies
+ * and never appear here.
  */
-final readonly class DependencyData
+final readonly class DependencyShape
 {
     public function __construct(
         public string $fqcn,
         public string $parameter,
+        public bool $promoted = false,
         public string $type = 'constructor',
     ) {}
 

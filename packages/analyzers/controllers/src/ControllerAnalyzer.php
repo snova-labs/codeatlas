@@ -19,6 +19,7 @@ use CodeAtlas\Contracts\ValueObjects\AnalysisError;
 use CodeAtlas\Contracts\ValueObjects\AnalysisResult;
 use CodeAtlas\Contracts\ValueObjects\FileReference;
 use CodeAtlas\Contracts\ValueObjects\ProjectContext;
+use CodeAtlas\Core\Parser\ParsedFile;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -30,7 +31,9 @@ use Psr\Log\NullLogger;
  * Output:
  *   - one controller node per class (ID: controller::{fqcn} — exactly
  *     what the route analyzer's RoutesTo edges target, so the graphs join)
- *   - Extends / Implements / UsesTrait edges
+ *   - Extends / Implements / UsesTrait edges, plus interface::{fqcn} and
+ *     trait::{fqcn} nodes for the referenced types, so those endpoints are
+ *     real nodes rather than placeholders the UI has to synthesize
  *   - DependsOn edges for constructor dependencies whose node type is
  *     recognizable by namespace convention (App\Services → service, etc.);
  *     unrecognized dependencies stay in metadata only
@@ -62,7 +65,7 @@ final class ControllerAnalyzer implements AnalyzerInterface
 
     public function supportedNodeTypes(): array
     {
-        return [NodeType::Controller];
+        return [NodeType::Controller, NodeType::Interface, NodeType::Trait];
     }
 
     public function analyze(ProjectContext $context): AnalysisResult
@@ -73,10 +76,12 @@ final class ControllerAnalyzer implements AnalyzerInterface
         $filesAnalyzed = 0;
         $filesSkipped = 0;
         $methodCount = 0;
+        $controllerCount = 0;
 
         foreach ($context->filesOfType(FileType::Controller) as $file) {
             try {
                 $parsed = $this->parser->parse($file->absolutePath);
+                assert($parsed instanceof ParsedFile);
                 $filesAnalyzed++;
             } catch (ParserException $e) {
                 $filesSkipped++;
@@ -102,7 +107,9 @@ final class ControllerAnalyzer implements AnalyzerInterface
             }
 
             $nodes[] = $this->controllerNode($controller, $file);
+            $nodes = [...$nodes, ...$this->referencedNodes($controller)];
             $edges = [...$edges, ...$this->controllerEdges($controller)];
+            $controllerCount++;
             $methodCount += count($controller->methods);
         }
 
@@ -111,7 +118,7 @@ final class ControllerAnalyzer implements AnalyzerInterface
             nodes: $nodes,
             edges: $edges,
             metadata: [
-                'controllers' => count($nodes),
+                'controllers' => $controllerCount,
                 'methods' => $methodCount,
                 'files_analyzed' => $filesAnalyzed,
                 'files_skipped' => $filesSkipped,
@@ -148,6 +155,47 @@ final class ControllerAnalyzer implements AnalyzerInterface
     }
 
     /**
+     * Nodes for the interfaces and traits this controller references.
+     *
+     * The declaring files are usually outside the controller scan scope
+     * (vendor interfaces, app/Concerns traits), so these nodes carry the
+     * FQCN but no file reference. Graph::addNode is ID-keyed and
+     * first-write-wins, so when another analyzer encounters the same
+     * interface or trait the two collapse into one node — no
+     * cross-analyzer coordination needed.
+     *
+     * @return list<Node>
+     */
+    private function referencedNodes(ControllerData $controller): array
+    {
+        $nodes = [];
+
+        foreach ($controller->interfaces as $interface) {
+            $nodes[] = $this->referencedNode(NodeType::Interface, $interface);
+        }
+
+        foreach ($controller->traits as $trait) {
+            $nodes[] = $this->referencedNode(NodeType::Trait, $trait);
+        }
+
+        return $nodes;
+    }
+
+    private function referencedNode(NodeType $type, string $fqcn): Node
+    {
+        $position = strrpos($fqcn, '\\');
+
+        return Node::make(
+            type: $type,
+            qualifier: $fqcn,
+            label: $position === false ? $fqcn : substr($fqcn, $position + 1),
+            group: $position === false ? null : substr($fqcn, 0, $position),
+            metadata: ['fqcn' => $fqcn, 'referenced_only' => true],
+            tags: ['referenced'],
+        );
+    }
+
+    /**
      * @return list<Edge>
      */
     private function controllerEdges(ControllerData $controller): array
@@ -166,7 +214,7 @@ final class ControllerAnalyzer implements AnalyzerInterface
         foreach ($controller->interfaces as $interface) {
             $edges[] = Edge::make(
                 source: $sourceId,
-                target: NodeType::Controller->id($interface),
+                target: NodeType::Interface->id($interface),
                 type: EdgeType::Implements,
             );
         }
@@ -174,7 +222,7 @@ final class ControllerAnalyzer implements AnalyzerInterface
         foreach ($controller->traits as $trait) {
             $edges[] = Edge::make(
                 source: $sourceId,
-                target: NodeType::Controller->id($trait),
+                target: NodeType::Trait->id($trait),
                 type: EdgeType::UsesTrait,
             );
         }

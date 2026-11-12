@@ -31,8 +31,6 @@
     "source": "https://github.com/snova-labs/codeatlas"
   },
     "require": {
-        "codeatlas/analyzer-controllers": "@dev",
-        "codeatlas/analyzer-middleware": "@dev",
         "php": "^8.3"
     },
     "require-dev": {
@@ -42,6 +40,7 @@
         "codeatlas/laravel": "@dev",
         "codeatlas/analyzer-routes": "@dev",
         "codeatlas/analyzer-middleware": "@dev",
+        "codeatlas/analyzer-controllers": "@dev",
         "codeatlas/exporter-json": "@dev",
         "laravel/pint": "^1.18",
         "pestphp/pest": "^3.5",

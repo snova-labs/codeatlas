@@ -1,0 +1,54 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Services;
+
+use App\Models\User;
+use App\Repositories\UserRepository;
+use App\Support\Concerns\LogsActivity;
+use App\Support\Contracts\Auditable;
+use Illuminate\Http\Request as HttpRequest;
+use Psr\Log\LoggerInterface;
+
+#[\Attribute]
+abstract class BaseService
+{
+}
+
+final class UserService extends BaseService implements Auditable
+{
+    use LogsActivity;
+
+    private LoggerInterface $logger;
+
+    public function __construct(
+        private readonly UserRepository $users,
+        protected \App\Services\EmailService $mailer,
+        LoggerInterface $logger,
+        private readonly ?CacheService $cache = null,
+        private readonly string $connection = 'default',
+    ) {
+        $this->logger = $logger;
+    }
+
+    #[Deprecated]
+    public function createUser(array $data, ?HttpRequest $request = null): User
+    {
+        $user = $this->users->create($data);
+        $this->mailer->sendWelcome($user);
+        $this->logger->info('created');
+
+        return $user;
+    }
+
+    protected function findOrFail(int|string $id): User&Auditable
+    {
+        return User::findOrFail($id);
+    }
+
+    private static function tag(): string
+    {
+        return self::class;
+    }
+}

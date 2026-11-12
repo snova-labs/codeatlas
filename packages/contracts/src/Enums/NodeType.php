@@ -14,6 +14,8 @@ enum NodeType: string
     case Route = 'route';
     case Controller = 'controller';
     case ControllerMethod = 'controller_method';
+    case Interface = 'interface';
+    case Trait = 'trait';
     case Middleware = 'middleware';
     case MiddlewareGroup = 'middleware_group';
     case Service = 'service';

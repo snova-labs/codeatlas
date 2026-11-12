@@ -2,18 +2,23 @@
 
 declare(strict_types=1);
 
-namespace CodeAtlas\Analyzers\Controllers\DTOs;
+namespace CodeAtlas\Core\Ast;
 
 /**
- * A single method parameter per the controllers result schema.
+ * One parameter of a method or constructor, as written in source.
+ *
+ * A neutral AST fact: analyzers map this onto whatever their own result
+ * schema calls for.
  */
-final readonly class ParameterData
+final readonly class ParameterShape
 {
     public function __construct(
         public string $name,
         public ?string $type,
         public bool $nullable,
         public ?string $default,
+        public bool $promoted = false,
+        public bool $variadic = false,
     ) {}
 
     /**

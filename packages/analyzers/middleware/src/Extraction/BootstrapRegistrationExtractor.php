@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CodeAtlas\Analyzers\Middleware\Extraction;
 
 use CodeAtlas\Analyzers\Middleware\DTOs\RegistrationData;
-use CodeAtlas\Contracts\ParsedFileInterface;
+use CodeAtlas\Core\Parser\ParsedFile;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
@@ -34,10 +34,14 @@ use PhpParser\Node\Scalar\String_;
  * The extractor finds every MethodCall on the closure's parameter inside
  * the withMiddleware closure — purely via AST, resilient to how the
  * builder chain is formatted.
+ *
+ * Typed against the concrete ParsedFile (rather than ParsedFileInterface)
+ * because we need its AST helpers, which the interface intentionally omits
+ * to keep the contracts package free of a PhpParser\Node import.
  */
 final class BootstrapRegistrationExtractor
 {
-    public function __construct(private readonly ParsedFileInterface $file) {}
+    public function __construct(private readonly ParsedFile $file) {}
 
     public function extract(): RegistrationData
     {
